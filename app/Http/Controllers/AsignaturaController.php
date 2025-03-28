@@ -38,7 +38,8 @@ class AsignaturaController extends Controller
      */
     public function show(Asignatura $asignatura)
     {
-        //
+        $modulos = $asignatura->modulos;//
+        return view('asignaturas.show', compact('asignatura','modulos'));
     }
 
     /**

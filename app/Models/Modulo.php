@@ -13,8 +13,14 @@ class Modulo extends Model
     protected $fillable = [
         'name',
         'description',
+        'asignatura_id'
     ];
 
+
+    public function asignatura()
+    {
+        return $this->belongsTo(Asignatura::class);
+    }
     public function lessons()
     {
         return $this->hasMany(Lesson::class);

@@ -2,17 +2,16 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Modulo;
-use App\Models\Lesson;
+use Illuminate\Database\Seeder;
 
-class ModuloSeeder extends Seeder
+class DesarrolloSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-       }
+        //
+    }
 }

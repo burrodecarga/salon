@@ -17,10 +17,11 @@ class QuestionFactory extends Factory
      */
     public function definition(): array
     {
+        $p="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus temporibus delectus, autem ut molestiae laboriosam, tempora totam architecto iure dignissimos a, dolore perspiciatis dolor asperiores ipsa fugit nesciunt minus aliquam!";
         return [
             'question' => $this->faker->sentence(3),
-            'answer' => $this->faker->sentence(3),
-            'lesson_id' => Lesson::all()->random()->id //
+            'answer' => $p,
+            'lesson_id' => Lesson::factory() //
         ];
     }
 }

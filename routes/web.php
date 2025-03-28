@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AsignaturaController;
+use App\Http\Controllers\BaseController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -15,7 +17,12 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/asignaturas', [Asignatura::class, 'index'])->name('asignaturas.index');
+    Route::get('/asignaturas', [AsignaturaController::class, 'index'])->name('asignaturas.index');
+
+    Route::get('/asignaturas/{asignatura}', [AsignaturaController::class, 'show'])->name('asignaturas.show');
+
+    Route::get('/modulos/{modulo}/lessons/{lesson}', [BaseController::class, 'index'])->name('base.index');
+
     Route::redirect('settings', 'settings/profile');
 
     Route::get('settings/profile', Profile::class)->name('settings.profile');

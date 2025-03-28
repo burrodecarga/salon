@@ -17,10 +17,11 @@ class OptionFactory extends Factory
      */
     public function definition(): array
     {
+        $p="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad placeat ab incidunt mollitia repellendus tenetur earum expedita, aliquam dolorem, unde amet possimus accusantium magnam obcaecati libero dolorum nostrum dignissimos ducimus similique, cum culpa at quisquam esse laborum! Doloremque consequuntur dolores modi eum, omnis obcaecati magni aperiam rem reprehenderit aliquid ex neque, autem facere? Vel, laboriosam consequatur. Corrupti repellat ratione, harum possimus voluptatibus et quam illum consectetur alias rerum quos quaerat.";
         return [
             'is_true' => $this->faker->boolean(0.2),
-            'answer' => $this->faker->sentence(3),
-            'question_id' => Question::all()->random()->id
+            'answer' => $p,
+            'question_id' => Question::factory()
         ];
     }
 }

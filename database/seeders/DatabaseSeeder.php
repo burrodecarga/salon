@@ -19,14 +19,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory(10)->create();
-        Asignatura::factory(4)->create();
-        Modulo::factory(10)->create();
-        Lesson::factory(100)->create();
-        Question::factory(100)->create();
-        Option::factory(100)->create();
+        // Modulo::factory(10)->create();
+        // Lesson::factory(100)->create();
+        // Question::factory(100)->create();
+        // Option::factory(100)->create();
         // $this->call(ModuloSeeder::class);
-        //$this->call(LessonSeeder::class);
-
+        $this->call(AsignaturaSeeder::class);
+        $this->call(ModuloSeeder::class);
         User::create([
             'name' => 'Edwin Henriquez',
             'email' => 'ed@gmail.com',
