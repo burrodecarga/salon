@@ -30,5 +30,12 @@
     "If you did not receive the email": "Si no has recibido el email",
     "click here to request another": "pulsa aquí para que te enviemos otro",
     "All rights reserved.":  "Todos los derechos reservados.",
-    "Dashboard":"Panel de Control"
+    "Dashboard":"Panel de Control",
+    "asignatura create":"crear asignatura",
+    "Asignatura":"Asignatura",
+    "Descripción":"Descripción",
+    "to":"de",
+    "of":"total",
+    "results":"registros",
+    "Showing":"Mostrando"
 }

@@ -18,24 +18,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call(RoleSeeder::class);
         User::factory(10)->create();
-        // Modulo::factory(10)->create();
-        // Lesson::factory(100)->create();
-        // Question::factory(100)->create();
-        // Option::factory(100)->create();
-        // $this->call(ModuloSeeder::class);
-        $this->call(AsignaturaSeeder::class);
         $this->call(ModuloSeeder::class);
         User::create([
             'name' => 'Edwin Henriquez',
             'email' => 'ed@gmail.com',
             'password' => bcrypt('123'),
             'email_verified_at' => now()
-        ]);
-        //->roles()->sync('2');
+        ])->roles()->sync('2');
         // User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        $this->call(AsignaturaSeeder::class);
     }
 }

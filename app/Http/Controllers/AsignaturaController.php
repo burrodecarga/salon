@@ -13,7 +13,7 @@ class AsignaturaController extends Controller
      */
     public function index()
     {
-        $asignaturas = Asignatura::orderBy('name')->get();
+        $asignaturas = Asignatura::orderBy('name')->paginate(9);
         return view('asignaturas.index', compact('asignaturas'));
     }
 
@@ -22,7 +22,7 @@ class AsignaturaController extends Controller
      */
     public function create()
     {
-        //
+       return view('asignaturas.create'); //
     }
 
     /**
@@ -30,7 +30,14 @@ class AsignaturaController extends Controller
      */
     public function store(StoreAsignaturaRequest $request)
     {
-        //
+       Asignatura::create([
+        'name'=>mb_strtolower($request->input('name')),
+        'description'=>mb_strtolower($request->input('description')),
+        'user_id'=>auth()->user()->id
+       ]);
+       $asignaturas = Asignatura::orderBy('name')->paginate(9);
+       return redirect()->route('asignaturas.index', compact('asignaturas'));
+
     }
 
     /**

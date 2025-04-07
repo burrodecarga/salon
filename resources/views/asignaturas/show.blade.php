@@ -1,7 +1,7 @@
 <x-layouts.app :title="__('Modulos')">
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
         <h2
-            class="text-center font-bold m-auto text-2xl text-gray-700 text-wrap justify-center items-center p-4 flex-1 h-6 bg-gray-100 rounded">
+            class="text-center font-bold m-auto text-2xl text-gray-700 text-wrap justify-center items-center p-4 flex-1 h-6 bg-gray-100 rounded w-full uppercase">
 
             {{ $asignatura->name }}
         </h2>

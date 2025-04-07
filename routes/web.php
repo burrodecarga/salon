@@ -18,6 +18,11 @@ Route::view('dashboard', 'dashboard')
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/asignaturas', [AsignaturaController::class, 'index'])->name('asignaturas.index');
+    Route::get('/asignaturas/create', [AsignaturaController::class, 'create'])->name('asignaturas.create');
+
+    Route::post('/asignaturas/store', [AsignaturaController::class, 'store'])->name('asignaturas.store');
+
+
 
     Route::get('/asignaturas/{asignatura}', [AsignaturaController::class, 'show'])->name('asignaturas.show');
 
