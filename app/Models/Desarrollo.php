@@ -9,4 +9,16 @@ class Desarrollo extends Model
 {
     /** @use HasFactory<\Database\Factories\DesarrolloFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'question',
+        'answer',
+        'question_id',
+        'examen_id'
+    ];
+
+    public function examen()
+    {
+        return $this->belongsTo(Examen::class);
+    }
 }

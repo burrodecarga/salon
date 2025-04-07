@@ -9,4 +9,15 @@ class Seleccion extends Model
 {
     /** @use HasFactory<\Database\Factories\SeleccionFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'is_true',
+        'opcion',
+        'examen_id',
+    ];
+
+    public function examen()
+    {
+        return $this->belongsTo(Examen::class);
+    }
 }

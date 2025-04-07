@@ -17,6 +17,6 @@ class AsignaturaSeeder extends Seeder
      */
     public function run(): void
     {
-        Asignatura::factory()->count(10)->has(Modulo::factory()->count(6)->has(Lesson::factory()->count(10)->has(Question::factory()->count(10)->has(Option::factory()->count(5)))))->create();//
+        Asignatura::factory()->count(5)->has(Modulo::factory()->count(6)->has(Lesson::factory()->count(10)->has(Question::factory()->count(10)->has(Option::factory()->count(5)))))->create();//
     }
 }

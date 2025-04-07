@@ -23,6 +23,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/modulos/{modulo}/lessons/{lesson}', [BaseController::class, 'index'])->name('base.index');
 
+    Route::get('preguntas/modulos/{modulo}/lessons/{lesson}', [BaseController::class, 'preguntas'])->name('base.preguntas');
+
+
     Route::redirect('settings', 'settings/profile');
 
     Route::get('settings/profile', Profile::class)->name('settings.profile');

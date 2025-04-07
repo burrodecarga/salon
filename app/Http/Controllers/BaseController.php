@@ -13,4 +13,10 @@ class BaseController extends Controller
     {
         return view('base.index', compact('modulo','lesson'));
     }
+
+    public function preguntas(Modulo $modulo, Lesson $lesson)
+    {
+        return view('base.preguntas', compact('modulo','lesson'));
+    }
+
 }

@@ -1,9 +1,9 @@
-<x-layouts.app :title="__('Lecciones')">
+<x-layouts.app :title="__('Preguntas')">
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
-        <div class="border px-4 py-2 bg-gray-100 rounded"><span class="font-bold text-2xl"> Modulo:  </span> <span> {{$modulo->name}}</span> </div>
+        <div class="border px-4 py-2 bg-gray-100 rounded"><span class="font-bold text-2xl"> Preguntas del Modulo:  </span> <span> {{$modulo->name}}</span> </div>
         <div class="grid  gap-4 grid-cols-1">
-            <iframe class="aspect-video w-full" src="{{asset('storage/videos/prueba.mp4')}}" controls></iframe>
-            <div class="border px-4 py-2 bg-gray-100 rounded justify-between flex"><span class="font-bold text-2xl"> Lección:  </span> <span> {{$lesson->name}}</span><a href="{{route('base.preguntas',[$modulo->id,$lesson->id])}}" class="px-4 py-2 bg-gray-300 font-bold">Crear Preguntas de Lección</a> </div>
+
+            <div class="border px-4 py-2 bg-gray-100 rounded justify-start flex items-center"><span class="font-bold text-2xl">Preguntas de la Lección:  </span> <span class=""> {{$lesson->name}}</span></div>
             <div class="border px-4 py-2 bg-gray-100 rounded"><span class="font-bold text-2xl"> Descripción:  </span> <span> {{$lesson->description}}</span>{{$lesson->id}} </div>
 
             <div class="border px-4 py-2 bg-gray-100 rounded"><span class="font-bold text-2xl"> Temática:  </span>

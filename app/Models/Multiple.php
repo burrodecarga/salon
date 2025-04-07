@@ -9,4 +9,17 @@ class Multiple extends Model
 {
     /** @use HasFactory<\Database\Factories\MultipleFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'is_true',
+        'opcion',
+        'examen_id',
+    ];
+
+
+
+    public function examen()
+    {
+        return $this->belongsTo(Examen::class);
+    }
 }
