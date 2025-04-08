@@ -37,5 +37,15 @@
     "to":"de",
     "of":"total",
     "results":"registros",
-    "Showing":"Mostrando"
+    "Showing":"Mostrando",
+    "edit asignatura":"modificar asignatura",
+    "description":"descripción",
+    "modulos":"módulos",
+    "name of modulo":"nombre del módulo",
+    "create modulo":"crear módulo",
+    "input name of modulo":"ingrese nombre del módulo",
+    "input description of modulo":"ingrese descripción del módulo",
+    "create":"crear",
+    "cancel":"cancelar"
+
 }

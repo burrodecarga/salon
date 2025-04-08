@@ -1,12 +1,14 @@
 <?php
 
-use App\Http\Controllers\AsignaturaController;
-use App\Http\Controllers\BaseController;
-use App\Livewire\Settings\Appearance;
-use App\Livewire\Settings\Password;
-use App\Livewire\Settings\Profile;
-use App\Models\Asignatura;
 use Illuminate\Support\Facades\Route;
+use App\Models\Asignatura;
+use App\Livewire\Settings\Profile;
+use App\Livewire\Settings\Password;
+use App\Livewire\Settings\Appearance;
+use App\Http\Controllers\ModuloController;
+use App\Http\Controllers\LessonController;
+use App\Http\Controllers\BaseController;
+use App\Http\Controllers\AsignaturaController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,14 +19,14 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/asignaturas', [AsignaturaController::class, 'index'])->name('asignaturas.index');
-    Route::get('/asignaturas/create', [AsignaturaController::class, 'create'])->name('asignaturas.create');
+    Route::resource('/asignaturas', AsignaturaController::class)->names('asignaturas');
 
-    Route::post('/asignaturas/store', [AsignaturaController::class, 'store'])->name('asignaturas.store');
+    Route::resource('asignatura/{asignatura}/modulos', ModuloController::class)->names('modulos');
+
+    Route::resource('asignatura/{asignatura}/modulo/{modulo}/lessons', LessonController::class)->names('lessons');
 
 
-
-    Route::get('/asignaturas/{asignatura}', [AsignaturaController::class, 'show'])->name('asignaturas.show');
+   //Route::get('/asignaturas/{asignatura}', [AsignaturaController::class, 'show'])->name('asignaturas.show');
 
     Route::get('/modulos/{modulo}/lessons/{lesson}', [BaseController::class, 'index'])->name('base.index');
 

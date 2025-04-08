@@ -35,8 +35,9 @@ class AsignaturaController extends Controller
         'description'=>mb_strtolower($request->input('description')),
         'user_id'=>auth()->user()->id
        ]);
-       $asignaturas = Asignatura::orderBy('name')->paginate(9);
-       return redirect()->route('asignaturas.index', compact('asignaturas'));
+       //$asignaturas = Asignatura::orderBy('name')->paginate(9);
+       flash()->success('Asignatura creada correctamente!');
+       return redirect()->route('asignaturas.index');
 
     }
 
@@ -54,7 +55,7 @@ class AsignaturaController extends Controller
      */
     public function edit(Asignatura $asignatura)
     {
-        //
+        return view('asignaturas.edit', compact('asignatura'));
     }
 
     /**
@@ -62,7 +63,12 @@ class AsignaturaController extends Controller
      */
     public function update(UpdateAsignaturaRequest $request, Asignatura $asignatura)
     {
-        //
+
+            $asignatura->name=mb_strtolower($request->input('name'));
+            $asignatura->description=mb_strtolower($request->input('description'));
+            $asignatura->save();
+           flash()->success('Asignatura modificada correctamente!');
+           return redirect()->route('asignaturas.index');
     }
 
     /**

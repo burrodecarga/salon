@@ -37,7 +37,7 @@ class AsignaturaPolicy
      */
     public function update(User $user, Asignatura $asignatura): bool
     {
-        return false;
+        return $user->id==$asignatura->user_id;
     }
 
     /**
@@ -45,7 +45,7 @@ class AsignaturaPolicy
      */
     public function delete(User $user, Asignatura $asignatura): bool
     {
-        return false;
+        return $user->id==$asignatura->user_id;
     }
 
     /**
