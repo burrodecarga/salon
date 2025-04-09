@@ -15,7 +15,7 @@ class ModuloController extends Controller
     public function index(Asignatura $asignatura)
     {
        $modulos = $asignatura->modulos()->paginate(9);
-       return view('modulos.index',compact('modulos','asignatura'));
+       return view('modulos.index',compact('asignatura','modulos'));
     }
 
     /**

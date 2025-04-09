@@ -1,6 +1,5 @@
 @csrf
 
-
 <div class="mb-4">
     <x-label class="italic my-2 capitalize" value="{{ __('name of modulo') }}" for="name"/>
     <x-input required type="text" name="name" class="w-full" placeholder="{{ __('input name of modulo')}}"
@@ -22,7 +21,7 @@ class="bg-blue-700 text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300
 
 </button>
 
-<a type="button" href="{{ route('modulos.index',[$asignatura,$modulo]) }}"
+<a type="button" href="{{ route('modulos.index',$asignatura) }}"
 class="bg-yellow-700 text-white hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
     {{ __('cancel') }}
 
