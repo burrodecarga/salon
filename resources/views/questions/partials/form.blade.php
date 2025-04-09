@@ -1,18 +1,33 @@
 @csrf
 
 <div class="mb-4">
-    <x-label class="italic my-2 capitalize" value="{{ __('name of lesson') }}" for="name"/>
-    <x-input required type="text" name="name" class="w-full" placeholder="{{ __('input name of lesson')}}"
+    <x-label class="italic my-2 capitalize" value="{{ __('level of answer') }}" for="level"/>
+    <select name="level">
+        <option value="dificultad baja" @if($question->level=='dificultad baja') selected @endif>dificultad baja</option>
+        <option value="dificultad baja-media" @if($question->level=='dificultad baja-media') selected @endif>dificultad baja-media</option>
+        <option value="dificultad media" @if($question->level=='dificultad media') selected @endif>dificultad media</option>
+        <option value="dificultad media-alta" @if($question->level=='dificultad media-alta') selected @endif>dificultad media-alta</option>
+        <option value="dificultad alta" @if($question->level=='dificultad alta') selected @endif>dificultad alta</option>
+    </select>
+    <x-input-error for="level" />
+</div>
+
+
+<div class="mb-4">
+    <x-label class="italic my-2 capitalize" value="{{ __('question of lesson') }}" for="question"/>
+    <x-input required type="text" name="question" class="w-full" placeholder="{{ __('input name of lesson')}}"
     value="{{ old('name',$lesson->name) }}"/>
-    <x-input-error for="name" />
+    <x-input-error for="question" />
 </div>
 
 <div class="mb-4">
-    <x-label class="italic my-2 capitalize" value="{{ __('name of lesson') }}" for="description"/>
-    <textarea name="description" class="w-full shadow bg-white rounded p-6 text-[13px]" rows="10" placeholder="{{ __('input description of lesson')}}"
-    >{{$lesson->description}}</textarea>
-    <x-input-error for="description" />
+    <x-label class="italic my-2 capitalize" value="{{ __('answer of lesson') }}" for="answer"/>
+    <x-input required type="text" name="answer" class="w-full" placeholder="{{ __('input name of lesson')}}"
+    value="{{ old('name',$lesson->name) }}"/>
+    <x-input-error for="answer" />
 </div>
+
+
 
 
 <button type="submit"

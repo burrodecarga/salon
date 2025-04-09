@@ -12,7 +12,6 @@ class Question extends Model
 
     protected $fillable = [
         'question',
-        'answer',
         'level',
         'lesson_id'
     ];
@@ -21,6 +20,7 @@ class Question extends Model
     {
         return $this->belongsTo(Lesson::class);
     }
+
 
     public function options()
     {

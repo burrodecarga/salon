@@ -26,10 +26,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('asignatura/{asignatura}/modulo/{modulo}/lessons', LessonController::class)->names('lessons');
 
-    Route::resource('asignatura/{asignatura}/modulos/{modulo}/lessons/{lesson}', QuestionController::class)->names('questions');
+     Route::resource('asignatura/{asignatura}/modulos/{modulo}/lessons/{lesson}/questions', QuestionController::class)->names('questions');
 
 
-   //Route::get('/asignaturas/{asignatura}', [AsignaturaController::class, 'show'])->name('asignaturas.show');
 
     Route::get('/modulos/{modulo}/lessons/{lesson}', [BaseController::class, 'index'])->name('base.index');
 

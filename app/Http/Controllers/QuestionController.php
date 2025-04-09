@@ -23,9 +23,12 @@ class QuestionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Asignatura $asignatura, Modulo $modulo,Lesson $lesson)
     {
-        //
+        // $question = new Question();
+        // $title="create question";
+        // $btn="create question";
+        // return view('questions.create',compact('asignatura','modulo','lesson','question','title','btn'));
     }
 
     /**

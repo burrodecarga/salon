@@ -5,9 +5,8 @@
             @include('nav.asignaturas')
             @include('nav.asignatura')
             @include('nav.modulos')
-            @include('nav.lecciones_str')
-            @include('nav.leccion_str')
             @include('nav.leccion')
+
         </ol>
     </nav>
     <h2 class="uppercase text-center font-bold mx-auto text-[20px] text-gray-600 text-wrap items-center p-1 mt-2">

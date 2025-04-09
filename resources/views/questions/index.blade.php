@@ -5,7 +5,6 @@
             @include('nav.asignaturas')
             @include('nav.asignatura')
             @include('nav.modulos')
-            @include('nav.lecciones_str')
             @include('nav.leccion')
             @include('nav.preguntas_str')
         </ol>
@@ -22,11 +21,6 @@
         </h2>
 
 
-        @role('teacher')
-            <div class="px-4 py-2 w-full bg-gray-300 rounded">
-                <a href="{{ route('questions.create', [$asignatura, $modulo,$lesson]) }}">Crear Pregunta</a>
-            </div>
-        @endrole
 
         <div class="grid auto-rows-min gap-4 md:grid-cols-1">
             @foreach ($questions as $key => $question)
@@ -35,9 +29,10 @@
                     </h1>
                     <h2
                         class="uppercase text-center font-bold m-auto text-[13px] text-gray-700 text-wrap justify-center items-center mt-4 mb-6">
-                        {{ $question->name }}
+                        {{ $question->question }}
                     </h2>
-                    <p class="p-3 border rounded text-justify text-[12px] bg-white my-2">{{$question->description}}</p>
+                    <p class="p-3 border rounded text-justify text-[12px] bg-white my-2">{{$question->answer}}</p>
+                    <h3 class="p-3 border rounded text-justify text-[12px] bg-white my-2">{{$question->level}}</h3>
 
                     {{-- <div class="flex justify-between">
                         @role('teacher')
