@@ -5,6 +5,7 @@ use App\Models\Asignatura;
 use App\Livewire\Settings\Profile;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Appearance;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ModuloController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\BaseController;
@@ -24,6 +25,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('asignatura/{asignatura}/modulos', ModuloController::class)->names('modulos');
 
     Route::resource('asignatura/{asignatura}/modulo/{modulo}/lessons', LessonController::class)->names('lessons');
+
+    Route::resource('asignatura/{asignatura}/modulos/{modulo}/lessons/{lesson}', QuestionController::class)->names('questions');
 
 
    //Route::get('/asignaturas/{asignatura}', [AsignaturaController::class, 'show'])->name('asignaturas.show');

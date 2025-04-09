@@ -61,7 +61,7 @@ class LessonController extends Controller
     {
 
         $title = "edit lesson";
-        $btn = "edit";
+        $btn = "edit lesson";
         return view('lessons.edit', compact('asignatura', 'modulo', 'lesson', 'btn', 'title'));
     }
 

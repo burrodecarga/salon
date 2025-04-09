@@ -25,7 +25,7 @@ class ModuloController extends Controller
     {
         $modulo = new Modulo();
         $title="create modulo";
-        $btn="create";
+        $btn="create modulo";
         return view('modulos.create',compact('asignatura','modulo','title','btn'));
 
     }
@@ -62,7 +62,7 @@ class ModuloController extends Controller
     {
 
         $title="edit modulo";
-        $btn="edit";
+        $btn="edit modulo";
         return view('modulos.edit',compact('asignatura','modulo','title','btn'));
     }
 

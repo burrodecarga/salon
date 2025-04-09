@@ -3,17 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
-use App\Http\Requests\StoreQuestionRequest;
+use App\Models\Modulo;
+use App\Models\Lesson;
+use App\Models\Asignatura;
 use App\Http\Requests\UpdateQuestionRequest;
+use App\Http\Requests\StoreQuestionRequest;
 
 class QuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Asignatura $asignatura, Modulo $modulo,Lesson $lesson)
     {
-        //
+        $questions = $lesson->questions()->paginate(9);
+        return view('questions.index', compact('questions','lesson', 'modulo', 'asignatura'));
     }
 
     /**

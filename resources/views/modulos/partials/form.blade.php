@@ -10,7 +10,7 @@
 
 <div class="mb-4">
     <x-label class="italic my-2 capitalize" value="{{ __('name of modulo') }}" for="description"/>
-    <textarea name="description" class="w-full shadow bg-white rounded" rows="6" placeholder="{{ __('input description of modulo')}}"
+    <textarea name="description" class="w-full shadow bg-white rounded p-6 text-[13px]" rows="10" placeholder="{{ __('input description of modulo')}}"
     >{{$modulo->description}}</textarea>
     <x-input-error for="description" />
 </div>

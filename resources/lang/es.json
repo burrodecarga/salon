@@ -46,6 +46,9 @@
     "input name of modulo":"ingrese nombre del módulo",
     "input description of modulo":"ingrese descripción del módulo",
     "create":"crear",
-    "cancel":"cancelar"
+    "cancel":"cancelar",
+    "edit modulo":"modificar módulo",
+    "create lesson":"crear lección",
+    "edit lesson":"modificar lección"
 
 }
