@@ -11,7 +11,7 @@ class StoreQuestionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user()->hasRole('teacher');
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreQuestionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+          'question'=>'required',
+          'lesson_id'=>'required|numeric' ,
+          'level'=>'required' //
         ];
     }
 }

@@ -45,15 +45,33 @@ class OptionController extends Controller
      */
     public function edit(Option $option)
     {
-        //
+
+        $title = "edit option";
+        $btn = "edit option";
+        return view('options.edit', compact('option', 'title', 'btn')); //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateOptionRequest $request, Option $option)
+    public function update(StoreOptionRequest $request, Option $option)
     {
-        //
+        $valor = 0;
+
+        if ($request->input('istrue') == 'on') {
+            $valor = 1;
+        }
+
+        $option->update([
+            'answer' => $request->input('answer'),
+            'is_true' => $valor
+        ]);
+
+        $option->save();
+        $question = $option->question;
+        $lesson = $question->lesson;
+        $modulo = $lesson->modulo;
+        return redirect()->route('base.opciones', [$modulo, $lesson, $question]);
     }
 
     /**
@@ -61,6 +79,23 @@ class OptionController extends Controller
      */
     public function destroy(Option $option)
     {
-        //
+        $option->delete();
+        $question = $option->question;
+        $lesson = $question->lesson;
+        $modulo = $lesson->modulo;
+        return redirect()->route('base.opciones', [$modulo, $lesson, $question]);
     }
+
+    public function modificar(Option $option)
+    {
+        Option::where('question_id', $option->question_id)->update(['is_true' => 0]);
+        $question = $option->question;
+        $lesson = $question->lesson;
+        $modulo = $lesson->modulo;
+        $option->is_true = 1;
+        $option->save();
+        return redirect()->route('base.opciones', [$modulo, $lesson, $question]);
+    }
+
+
 }

@@ -19,7 +19,8 @@ class QuestionFactory extends Factory
     {
         $p="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus temporibus delectus, autem ut molestiae laboriosam, tempora totam architecto iure dignissimos a, dolore perspiciatis dolor asperiores ipsa fugit nesciunt minus aliquam!";
         return [
-            'question' => $this->faker->sentence(3),
+            'question' => $this->faker->text(200),
+            'level' => $this->faker->randomElement(['dificultad baja','dificultad baja-media','dificultad media','dificultad media-baja','dificultad alta']),
             'lesson_id' => Lesson::factory() //
         ];
     }

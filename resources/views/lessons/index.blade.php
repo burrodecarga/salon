@@ -52,10 +52,10 @@
                         @endrole
 
                         @role('teacher')
-                            <a href="{{ route('questions.index', [$asignatura, $modulo,$lesson]) }}"
+                             <a href="{{ route('base.preguntas', [$modulo,$lesson]) }}"
                                 class="cursor-pointer px-4 py-2 bg-gray-300 border border-white  z-99 rounded">
-                                Ver y Crear Preguntas de Exámen
-                            </a>
+                                Ver y Crear Preguntas de lección para Exámen
+                            </a> -
                         @endrole
                     </div>
 

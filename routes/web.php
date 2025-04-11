@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OptionController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Asignatura;
 use App\Livewire\Settings\Profile;
@@ -26,13 +27,26 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('asignatura/{asignatura}/modulo/{modulo}/lessons', LessonController::class)->names('lessons');
 
-     Route::resource('asignatura/{asignatura}/modulos/{modulo}/lessons/{lesson}/questions', QuestionController::class)->names('questions');
+    Route::resource('asignatura/{asignatura}/modulos/{modulo}/lessons/{lesson}/questions', QuestionController::class)->names('questions');
 
-
+    Route::resource('/options', OptionController::class)->names('options');
+    Route::get('/modificar/options/{option}', [OptionController::class, 'modificar'])->name('modificar');
 
     Route::get('/modulos/{modulo}/lessons/{lesson}', [BaseController::class, 'index'])->name('base.index');
 
     Route::get('preguntas/modulos/{modulo}/lessons/{lesson}', [BaseController::class, 'preguntas'])->name('base.preguntas');
+
+    Route::get('crear/preguntas/modulos/{modulo}/lessons/{lesson}', [BaseController::class, 'pregunta'])->name('base.pregunta');
+
+    Route::get('add/preguntas/modulos/{modulo}/lessons/{lesson}', [BaseController::class, 'crear'])->name('base.crear');
+
+    Route::post('base/almacenar', [BaseController::class, 'almacenar'])->name('base.almacenar');
+
+    Route::get('base/crearopciones/{question}', [BaseController::class, 'crearopciones'])->name('base.crearopciones');
+
+    Route::get('opciones/modulos/{modulo}/lessons/{lesson}/questions/{question}', [BaseController::class, 'opciones'])->name('base.opciones');
+
+
 
 
     Route::redirect('settings', 'settings/profile');
@@ -40,6 +54,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/profile', Profile::class)->name('settings.profile');
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
+
+
 });
 
 require __DIR__ . '/auth.php';
