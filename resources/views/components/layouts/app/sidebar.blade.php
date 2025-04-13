@@ -17,9 +17,18 @@
                     <flux:navlist.item icon="home" :href="route('dashboard')"
                         current="{{ request()->routeIs('dashboard') }}" wire:navigate>{{ __('Dashboard') }}
                     </flux:navlist.item>
-                    <flux:navlist.item icon="book-open" :href="route('asignaturas.index')"
-                    current="{{ request()->routeIs('asignaturas') }}" wire:navigate>{{ __('Asignaturas') }}
+
+                    <flux:navlist.item icon="book-open" :href="route('listado')"
+                    current="{{ request()->routeIs('listado') }}" wire:navigate>{{ __('Asignaturas') }}
                 </flux:navlist.item>
+
+                <flux:navlist.item icon="cog-8-tooth" :href="route('asignaturas.index')"
+                current="{{ request()->routeIs('asignaturas') }}" wire:navigate>{{ __('Configurar Asignaturas') }}
+            </flux:navlist.item>
+
+            <flux:navlist.item icon="cog-8-tooth" :href="route('examenes.index')"
+                current="{{ request()->routeIs('examenes') }}" wire:navigate>{{ __('Configurar Exámenes') }}
+            </flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 
@@ -134,5 +143,6 @@
 
         @fluxScripts
     </body>
+
     @stack('script')
 </html>

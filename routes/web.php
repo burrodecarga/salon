@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExamenController;
 use App\Http\Controllers\OptionController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Asignatura;
@@ -20,8 +21,11 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','role:teacher|super-admin'])->group(function () {
     Route::resource('/asignaturas', AsignaturaController::class)->names('asignaturas');
+
+    Route::get('/listado/asignaturas', [AsignaturaController::class,'listado'])->name('listado');
+
 
     Route::resource('asignatura/{asignatura}/modulos', ModuloController::class)->names('modulos');
 
@@ -38,7 +42,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('crear/preguntas/modulos/{modulo}/lessons/{lesson}', [BaseController::class, 'pregunta'])->name('base.pregunta');
 
-    Route::get('add/preguntas/modulos/{modulo}/lessons/{lesson}', [BaseController::class, 'crear'])->name('base.crear');
+    Route::get('add/preguntas/asignaturas/{asignatura}/modulos/{modulo}/lessons/{lesson}', [BaseController::class, 'crear'])->name('base.crear');
 
     Route::post('base/almacenar', [BaseController::class, 'almacenar'])->name('base.almacenar');
 
@@ -46,7 +50,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('opciones/modulos/{modulo}/lessons/{lesson}/questions/{question}', [BaseController::class, 'opciones'])->name('base.opciones');
 
-
+Route::resource('/examenes',ExamenController::class)->names('examenes');
 
 
     Route::redirect('settings', 'settings/profile');

@@ -13,7 +13,10 @@ class ExamenController extends Controller
      */
     public function index()
     {
-        //
+        $asignaturas_id = auth()->user()->asignaturas()->pluck('id')->toArray();
+        $asignaturas = auth()->user()->asignaturas;
+        $examenes = Examen::whereIn('asignatura_id',$asignaturas_id)->get();
+        return view('examenes.index',compact('asignaturas','examenes'));
     }
 
     /**
@@ -21,7 +24,12 @@ class ExamenController extends Controller
      */
     public function create()
     {
-        //
+
+        $title='create examen';
+        $btn='create examen';
+        $asignaturas = auth()->user()->asignaturas;
+        $examen = new Examen();
+        return view('examenes.create',compact('asignaturas','examen','title','btn'));
     }
 
     /**

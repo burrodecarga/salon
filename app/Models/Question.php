@@ -14,7 +14,12 @@ class Question extends Model
         'question',
         'level',
         'type',
-        'lesson_id'
+        'lesson_id',
+        'modulo_id',
+        'asignatura_id',
+        'lesson',
+        'modulo',
+        'asignatura',
     ];
 
     public function lesson()

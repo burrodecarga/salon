@@ -59,7 +59,9 @@ class User extends Authenticatable
             ->implode('');
     }
 
-
+    public function asignaturas(){
+        return $this->hasMany(Asignatura::class,'user_id');
+    }
     public function modulos()
     {
         return $this->belongsToMany(Modulo::class);

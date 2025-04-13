@@ -15,6 +15,11 @@ return new class extends Migration {
             $table->text('question');
             $table->text('type')->default('multiple');
             $table->string('level')->nullable();
+            $table->unsignedBigInteger('asignatura_id')->nullable();
+            $table->unsignedBigInteger('modulo_id')->nullable();
+            $table->string('asignatura')->nullable();
+            $table->string('modulo')->nullable();
+            $table->string('lesson')->nullable();
             $table->unsignedBigInteger('lesson_id');
             $table->foreign('lesson_id')->references('id')->on('lessons')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

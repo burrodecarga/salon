@@ -13,7 +13,12 @@ class Asignatura extends Model
     protected $fillable = [
         'name',
         'description',
+        'user_id'
     ];
+
+    public function profesor(){
+        return $this->belongsTo(User::class,'user_id');
+    }
 
     public function modulos()
     {

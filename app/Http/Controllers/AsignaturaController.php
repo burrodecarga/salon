@@ -13,7 +13,14 @@ class AsignaturaController extends Controller
      */
     public function index()
     {
-        $asignaturas = Asignatura::orderBy('name')->paginate(9);
+        if(auth()->user()->hasRole('super-admin')){
+
+            $asignaturas = Asignatura::orderBy('name')->paginate(9);
+        }else{
+            $asignaturas = auth()->user()->asignaturas()->paginate(9);
+
+        }
+
         return view('asignaturas.index', compact('asignaturas'));
     }
 
@@ -78,4 +85,14 @@ class AsignaturaController extends Controller
     {
         //
     }
+
+    public function listado()
+    {
+        //$asignaturas = Asignatura::with('modulos')->get();
+        $asignaturas = auth()->user()->asignaturas;
+        //dd($asignaturas);
+        return view('asignaturas.listado', compact('asignaturas'));
+    }
+
+
 }

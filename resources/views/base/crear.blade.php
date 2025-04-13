@@ -6,6 +6,11 @@
             <hr>
             <form action="{{ route('base.almacenar', $question) }}" method="POST">
                 <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
+                <input type="hidden" name="modulo_id" value="{{ $modulo->id }}">
+                <input type="hidden" name="asignatura_id" value="{{ $asignatura->id }}">
+                <input type="hidden" name="lesson" value="{{ $lesson->name }}">
+                <input type="hidden" name="modulo" value="{{ $modulo->name }}">
+                <input type="hidden" name="asignatura" value="{{ $asignatura->name }}">
                 @include('base.partials.form')
             </form>
         </div>

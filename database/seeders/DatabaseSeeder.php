@@ -27,6 +27,13 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123'),
             'email_verified_at' => now()
         ])->roles()->sync('2');
+
+        User::create([
+            'name' => 'Edwin Henriquez',
+            'email' => 'super@gmail.com',
+            'password' => bcrypt('123'),
+            'email_verified_at' => now()
+        ])->roles()->sync('1');
         // User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
