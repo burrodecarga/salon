@@ -21,10 +21,10 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::middleware(['auth','role:teacher|super-admin'])->group(function () {
+Route::middleware(['auth', 'role:teacher|super-admin'])->group(function () {
     Route::resource('/asignaturas', AsignaturaController::class)->names('asignaturas');
 
-    Route::get('/listado/asignaturas', [AsignaturaController::class,'listado'])->name('listado');
+    Route::get('/listado/asignaturas', [AsignaturaController::class, 'listado'])->name('listado');
 
 
     Route::resource('asignatura/{asignatura}/modulos', ModuloController::class)->names('modulos');
@@ -50,7 +50,7 @@ Route::middleware(['auth','role:teacher|super-admin'])->group(function () {
 
     Route::get('opciones/modulos/{modulo}/lessons/{lesson}/questions/{question}', [BaseController::class, 'opciones'])->name('base.opciones');
 
-Route::resource('/examenes',ExamenController::class)->names('examenes');
+    Route::resource('/examens', ExamenController::class)->names('examenes');
 
 
     Route::redirect('settings', 'settings/profile');

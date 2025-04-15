@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,15 +14,16 @@ return new class extends Migration
             $table->id();
             $table->string('name')->default('parcial');
             $table->text('description')->nullable();
-            $table->text('type')->default('multiple');
+            $table->text('type')->default('multiple')->nullable();
             $table->string('level')->nullable();
             $table->unsignedBigInteger('asignatura_id')->nullable();
             $table->unsignedBigInteger('modulo_id')->nullable();
             $table->string('asignatura')->nullable();
             $table->string('modulo')->nullable();
             $table->string('lesson')->nullable();
-            $table->unsignedBigInteger('lesson_id');
-            $table->foreign('lesson_id')->references('id')->on('lessons')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('lesson_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

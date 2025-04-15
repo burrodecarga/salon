@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ModuloSeeder::class);
         User::create([
             'name' => 'Edwin Henriquez',
+            'rol' => 'teacher',
             'email' => 'ed@gmail.com',
             'password' => bcrypt('123'),
             'email_verified_at' => now()
@@ -39,5 +40,9 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         $this->call(AsignaturaSeeder::class);
+        $this->call(ModuloSeeder::class);
+        $this->call(LessonSeeder::class);
+        $this->call(QuestionSeeder::class);
+        $this->call(OptionSeeder::class);
     }
 }

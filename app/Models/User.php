@@ -21,6 +21,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'rol',
         'email',
         'password',
     ];
@@ -59,11 +60,8 @@ class User extends Authenticatable
             ->implode('');
     }
 
-    public function asignaturas(){
-        return $this->hasMany(Asignatura::class,'user_id');
-    }
-    public function modulos()
-    {
-        return $this->belongsToMany(Modulo::class);
-    }
+
+
+
+
 }

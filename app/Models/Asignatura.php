@@ -13,15 +13,23 @@ class Asignatura extends Model
     protected $fillable = [
         'name',
         'description',
-        'user_id'
+        'teacher_id'
     ];
 
-    public function profesor(){
-        return $this->belongsTo(User::class,'user_id');
-    }
 
     public function modulos()
     {
         return $this->hasMany(Modulo::class);
     }
+
+    public function teacher()
+    {
+        return $this->belongsTo(User::class, 'teacher_id');
+    }
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'asignatura_student', 'asignatura_id', 'student_id');
+    }
+
+
 }

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Teacher;
 use App\Models\Asignatura;
-use App\Http\Requests\StoreAsignaturaRequest;
 use App\Http\Requests\UpdateAsignaturaRequest;
+use App\Http\Requests\StoreAsignaturaRequest;
 
 class AsignaturaController extends Controller
 {
@@ -13,11 +14,12 @@ class AsignaturaController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->hasRole('super-admin')){
+        if (auth()->user()->hasRole('super-admin')) {
 
             $asignaturas = Asignatura::orderBy('name')->paginate(9);
-        }else{
-            $asignaturas = auth()->user()->asignaturas()->paginate(9);
+        } else {
+            $profesor = Teacher::find(auth()->user()->id);
+            $asignaturas = $profesor->asignaturas()->paginate(9);
 
         }
 
@@ -29,7 +31,7 @@ class AsignaturaController extends Controller
      */
     public function create()
     {
-       return view('asignaturas.create'); //
+        return view('asignaturas.create'); //
     }
 
     /**
@@ -37,14 +39,14 @@ class AsignaturaController extends Controller
      */
     public function store(StoreAsignaturaRequest $request)
     {
-       Asignatura::create([
-        'name'=>mb_strtolower($request->input('name')),
-        'description'=>mb_strtolower($request->input('description')),
-        'user_id'=>auth()->user()->id
-       ]);
-       //$asignaturas = Asignatura::orderBy('name')->paginate(9);
-       flash()->success('Asignatura creada correctamente!');
-       return redirect()->route('asignaturas.index');
+        Asignatura::create([
+            'name' => mb_strtolower($request->input('name')),
+            'description' => mb_strtolower($request->input('description')),
+            'user_id' => auth()->user()->id
+        ]);
+        //$asignaturas = Asignatura::orderBy('name')->paginate(9);
+        flash()->success('Asignatura creada correctamente!');
+        return redirect()->route('asignaturas.index');
 
     }
 
@@ -54,7 +56,7 @@ class AsignaturaController extends Controller
     public function show(Asignatura $asignatura)
     {
         $modulos = $asignatura->modulos;//
-        return view('asignaturas.show', compact('asignatura','modulos'));
+        return view('asignaturas.show', compact('asignatura', 'modulos'));
     }
 
     /**
@@ -71,11 +73,11 @@ class AsignaturaController extends Controller
     public function update(UpdateAsignaturaRequest $request, Asignatura $asignatura)
     {
 
-            $asignatura->name=mb_strtolower($request->input('name'));
-            $asignatura->description=mb_strtolower($request->input('description'));
-            $asignatura->save();
-           flash()->success('Asignatura modificada correctamente!');
-           return redirect()->route('asignaturas.index');
+        $asignatura->name = mb_strtolower($request->input('name'));
+        $asignatura->description = mb_strtolower($request->input('description'));
+        $asignatura->save();
+        flash()->success('Asignatura modificada correctamente!');
+        return redirect()->route('asignaturas.index');
     }
 
     /**
@@ -88,9 +90,10 @@ class AsignaturaController extends Controller
 
     public function listado()
     {
-        //$asignaturas = Asignatura::with('modulos')->get();
-        $asignaturas = auth()->user()->asignaturas;
-        //dd($asignaturas);
+
+        $profesor = Teacher::find(auth()->user()->id);
+        $asignaturas = $profesor->asignaturas;
+
         return view('asignaturas.listado', compact('asignaturas'));
     }
 
