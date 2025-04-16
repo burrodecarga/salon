@@ -36,7 +36,8 @@ class AsignaturaSeeder extends Seeder
         foreach ($materias as $key => $materia) {
             Asignatura::create([
                 'name' => $materia,
-                'description' => Str::limit($p, rand(200, 300)) //
+                'description' => Str::limit($p, rand(200, 300)),
+
             ]);
         }
         // Asignatura::factory(1)->has(Modulo::factory(1)->has(Lesson::factory()->count(1)->has(Question::factory()->count(130)->has(Option::factory()->count(5)))))->create();//

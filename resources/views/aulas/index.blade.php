@@ -1,4 +1,4 @@
-<x-layouts.app :title="'Listado de Exámenes'">
+<x-layouts.app :title="'Listado de Aulas'">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
@@ -10,11 +10,11 @@
                     <div class="card-header bg-primary text-white">
                         <div class="card-title flex justify-between items-center">
                             <h4>
-                                {{ __('Listado de Exámenes') }}
+                                {{ __('Listado de Aulas o Secciones') }}
                             </h4>
 
-                            <a href="{{ route('examenes.create') }}" class="text-white cursor-pointer"
-                                title="{{ __('add examen') }}">
+                            <a href="{{ route('aulas.create') }}" class="text-white cursor-pointer"
+                                title="{{ __('add aula') }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -24,35 +24,40 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table id="examen" class="table table-hover text-[14px]" style="width:100%">
+                        <table id="aula" class="table table-hover text-[14px]" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Asignatura</th>
-                                    <th>Evaluación</th>
-                                    <th>Tipo</th>
-                                    <th>Contenido</th>
+                                    <th>Aula</th>
+                                    <th>Período</th>
+                                    <th>Estudiantes</th>
                                     <th>actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($examenes as $examen)
+                                @foreach ($aulas as $aula)
                                     <tr>
-                                        <td width="">{{ $examen->asignatura }}</td>
-                                        <td width="">{{ $examen->name }}</td>
-                                        <td width="15%" class="text-wrap">
-                                            {{ $examen->type }}
+                                        <td width="">{{ $aula->asignatura }}</td>
+                                        <td width="">{{ $aula->name }}</td>
+                                        <td width="" class="text-wrap">
+                                            {{ $aula->periodo }}
                                         </td>
                                         <td width="" class="text-wrap">
-                                            {{ $examen->level }}
+                                            estudiantes
                                         </td>
-                                        <td width="100%" class="flex gap-8 items-center flex-wrap">
-                                            <a href="{{ route('examenes.show', $examen->id) }}" class="text-green-600"
-                                                title="ver preguntas de exámen">
+                                        <td width="" class="flex gap-8 items-center flex-wrap">
+                                            <a href="{{ route('aulas.show', $aula->id) }}" class="text-green-600"
+                                                title="ver detalles de la sección o aula">
 
                                                 <flux:icon.squares-plus />
                                             </a>
+                                            <a href="{{ route('aulas.edit', $aula->id) }}" class="text-green-600"
+                                                title="ver preguntas de exámen">
 
-                                            <form action="{{ route('examenes.destroy', $examen) }}" method="POST"
+                                                <flux:icon.pencil-square />
+                                            </a>
+
+                                            <form action="{{ route('aulas.destroy', $aula) }}" method="POST"
                                                 class="text-red-600 items-center text-justify h-full"
                                                 title="eliminar exámen">
                                                 @csrf
@@ -84,9 +89,9 @@
 
                 <script>
                     $(document).ready(function() {
-                        $('#examen').DataTable({
+                        $('#aula').DataTable({
                             "columnDefs": [{
-                                "targets": [3],
+                                "targets": [4],
                                 "orderable": false
                             }]
 

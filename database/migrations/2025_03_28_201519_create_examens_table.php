@@ -22,8 +22,8 @@ return new class extends Migration {
             $table->string('modulo')->nullable();
             $table->string('lesson')->nullable();
             $table->unsignedBigInteger('lesson_id')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('teacher_id')->nullable();
+            $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

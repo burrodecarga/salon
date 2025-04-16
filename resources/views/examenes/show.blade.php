@@ -1,7 +1,10 @@
 <x-layouts.app :title="'preguntas de exámen'">
+    <h1>{{ $examen->asignatura }}</h1>
+    <h1>{{ $examen->teacher->name }}</h1>
     <h1>{{ $examen->name }}</h1>
     <h2>preguntas {{ $questions->count() }}</h2>
-    <h1>{{ $examen->description }}</h1>
+    <h1>{{ $examen->level }}</h1>
+    <h1>{{ $examen->type }}</h1>
     @foreach ($questions as $key => $question)
         <article class="bg-gray-200 my-6 p-4 rounded">
             <section>

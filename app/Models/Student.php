@@ -23,4 +23,9 @@ class Student extends User
     {
         return $this->belongsToMany(Asignatura::class, 'asignatura_student', 'asignatura_id', 'student_id');
     }
+
+    public function aulas()
+    {
+        return $this->belongsToMany(Aula::class)->withTimestamps();
+    }
 }

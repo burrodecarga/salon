@@ -49,6 +49,12 @@ class User extends Authenticatable
         ];
     }
 
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        // your other new column
+    ];
+
     /**
      * Get the user's initials
      */

@@ -22,7 +22,7 @@ class Examen extends Model
         'asignatura_id',
         'modulo_id',
         'lesson_id',
-        'user_id',
+        'teacher_id',
     ];
     public function lesson()
     {
@@ -30,20 +30,16 @@ class Examen extends Model
     }
 
 
-    public function seleccions()
-    {
-        return $this->hasMany(Seleccion::class);
-    }
 
-    public function questios()
+    public function teacher()
+    {
+        return $this->belongsTo(User::class, 'teacher_id');
+    }
+    public function questions()
     {
         return $this->belongsToMany(Question::class)->withTimestamps();
     }
 
-    public function profesor()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
 
 
 }

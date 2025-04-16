@@ -18,6 +18,8 @@
                         <tr>
                             <th>Asignatura</th>
                             <th>Modulos</th>
+                            <th>Estudiantes</th>
+                            <th>Exámenes</th>
                             <th>acciones</th>
                         </tr>
                     </thead>
@@ -27,6 +29,7 @@
                                 <td width="">{{ $asignatura->name }}</td>
                                 <td width="">Módulos:{{ $asignatura->modulos->count() }}</td>
                                 <td width="">Estudiantes:{{ $asignatura->students }}</td>
+                                <td width="">Exámenes</td>
                                 <td width=""
                                     class="flex-wrap gap-3 flex justify-between text-center mx-auto w-full flex-1">
                                     <a href="#" class="text-green-600">

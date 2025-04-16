@@ -1,16 +1,17 @@
 <?php
 
-use App\Http\Controllers\ExamenController;
-use App\Http\Controllers\OptionController;
 use Illuminate\Support\Facades\Route;
-use App\Models\Asignatura;
 use App\Livewire\Settings\Profile;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Appearance;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\OptionController;
 use App\Http\Controllers\ModuloController;
 use App\Http\Controllers\LessonController;
+use App\Http\Controllers\ExamenController;
 use App\Http\Controllers\BaseController;
+use App\Http\Controllers\AulaController;
 use App\Http\Controllers\AsignaturaController;
 
 Route::get('/', function () {
@@ -50,9 +51,10 @@ Route::middleware(['auth', 'role:teacher|super-admin'])->group(function () {
 
     Route::get('opciones/modulos/{modulo}/lessons/{lesson}/questions/{question}', [BaseController::class, 'opciones'])->name('base.opciones');
 
-    Route::resource('/examens', ExamenController::class)->names('examenes');
-
-
+    Route::resource('/examenes', ExamenController::class)->names('examenes');
+    Route::resource('/aulas', AulaController::class)->names('aulas');
+    Route::resource('/students', StudentController::class)->names('students');
+    Route::get('/students/{student}/inscribir', [StudentController::class, 'inscribir'])->name('students.inscribir');
     Route::redirect('settings', 'settings/profile');
 
     Route::get('settings/profile', Profile::class)->name('settings.profile');

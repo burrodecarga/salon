@@ -28,8 +28,9 @@ class AsignaturaFactory extends Factory
             'neurología'
         ];
         return [
-            'name' => $this->faker->randomElement($materias).' '.rand(1,3),
-            'description' => $p, //
+            'name' => $this->faker->randomElement($materias) . ' ' . rand(1, 3),
+            'description' => $p,
+            'teacher_id' => rand(11, 15) //
         ];
     }
 }

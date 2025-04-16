@@ -2,14 +2,15 @@
 
 namespace Database\Seeders;
 
-use App\Models\Asignatura;
-use App\Models\Option;
-use App\Models\Question;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Teacher;
+use App\Models\Question;
+use App\Models\Option;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Modulo;
 use App\Models\Lesson;
+use App\Models\Asignatura;
 
 class DatabaseSeeder extends Seeder
 {
@@ -29,6 +30,7 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now()
         ])->roles()->sync('2');
 
+
         User::create([
             'name' => 'Edwin Henriquez',
             'email' => 'super@gmail.com',
@@ -44,5 +46,13 @@ class DatabaseSeeder extends Seeder
         $this->call(LessonSeeder::class);
         $this->call(QuestionSeeder::class);
         $this->call(OptionSeeder::class);
+
+        $as = Asignatura::inRandomOrder()->take(2)->get();
+        //dd($a->name);
+        $teacher = Teacher::find(11);
+        foreach ($as as $a) {
+            $a->teacher_id = $teacher->id;
+            $a->save();
+        }
     }
 }

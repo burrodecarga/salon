@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Teacher;
 use App\Models\Examen;
-use App\Http\Requests\StoreExamenRequest;
 use App\Http\Requests\UpdateExamenRequest;
+use App\Http\Requests\StoreExamenRequest;
 
 class ExamenController extends Controller
 {
@@ -13,9 +14,11 @@ class ExamenController extends Controller
      */
     public function index()
     {
-        $asignaturas_id = auth()->user()->asignaturas()->pluck('id')->toArray();
-        $asignaturas = auth()->user()->asignaturas;
-        $examenes = auth()->user()->examenes;
+        $teacher = Teacher::find(auth()->user()->id);
+        $asignaturas_id = $teacher->asignaturas()->pluck('id')->toArray();
+        $asignaturas = $teacher->asignaturas;
+        $examenes = $teacher->examenes;
+
         return view('examenes.index', compact('asignaturas', 'examenes'));
     }
 
@@ -27,7 +30,8 @@ class ExamenController extends Controller
 
         $title = 'create examen';
         $btn = 'create examen';
-        $asignaturas = auth()->user()->asignaturas;
+        $teacher = Teacher::find(auth()->user()->id);
+        $asignaturas = $teacher->asignaturas;
         $examen = new Examen();
         return view('examenes.create', compact('asignaturas', 'examen', 'title', 'btn'));
     }
@@ -43,9 +47,10 @@ class ExamenController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Examen $examen)
+    public function show($examene)
     {
-        $questions = $examen->questios()->inRandomOrder()->get();
+        $examen = Examen::find($examene);
+        $questions = $examen->questions()->inRandomOrder()->get();
         //dd($examen);
         return view('examenes.show', compact('examen', 'questions'));
     }

@@ -16,11 +16,26 @@
                 <flux:navlist.group :heading="__('Platform')" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')"
                         current="{{ request()->routeIs('dashboard') }}" wire:navigate>{{ __('Dashboard') }}
-                    </flux:navlist.item>
+                   </flux:navlist.item>
 
                     <flux:navlist.item icon="book-open" :href="route('listado')"
                     current="{{ request()->routeIs('listado') }}" wire:navigate>{{ __('Asignaturas') }}
                 </flux:navlist.item>
+
+                    <flux:navlist.item icon="book-open" :href="route('examenes.index')"
+                    current="{{ request()->routeIs('examenes.index') }}" wire:navigate>{{ __('Exámenes') }}
+                </flux:navlist.item>
+
+                <flux:navlist.item icon="book-open" :href="route('aulas.index')"
+                    current="{{ request()->routeIs('aulas.index') }}" wire:navigate>{{ __('Aulas o Secciones') }}
+                </flux:navlist.item>
+
+                <flux:navlist.item icon="book-open" :href="route('students.index')"
+                current="{{ request()->routeIs('students.index') }}" wire:navigate>{{ __('Estudiantes') }}
+            </flux:navlist.item>
+
+
+
 
                 <flux:navlist.item icon="cog-8-tooth" :href="route('asignaturas.index')"
                 current="{{ request()->routeIs('asignaturas') }}" wire:navigate>{{ __('Configurar Asignaturas') }}

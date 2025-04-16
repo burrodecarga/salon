@@ -104,10 +104,32 @@ class CreateExamen extends Component
             'description' => $descripcionExamen,
             'asignatura' => $asignatura->name,
             'asignatura_id' => $asignatura->id,
-            'user_id' => auth()->user()->id,
+            'teacher_id' => auth()->user()->id,
         ]);
 
-        $data->questios()->sync($totalPreguntas);
+
+        $data->questions()->sync($totalPreguntas);
+
+        $res = Question::where('asignatura_id', $data->asignatura_id)->groupBy('level')
+            ->selectRaw(' level,count(*) as total')
+            ->get();
+        //dd($res);
+        $str = '';
+        foreach ($res as $r) {
+            $str = $str . $r->total . ' ' . $r->level . ', ';
+        }
+
+        $res1 = Question::where('asignatura_id', $data->asignatura_id)->groupBy('type')
+            ->selectRaw(' type,count(*) as total')
+            ->get();
+        $str1 = '';
+        foreach ($res1 as $r) {
+            $str1 = $str1 . $r->total . ' ' . $r->type . ', ';
+        }
+
+        $data->level = $str;
+        $data->type = $str1;
+        $data->save();
 
         return redirect()->route('examenes.index');
 

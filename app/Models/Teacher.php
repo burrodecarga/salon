@@ -21,4 +21,16 @@ class Teacher extends User
     {
         return $this->hasMany(Asignatura::class, 'teacher_id');
     }
+
+    public function examenes()
+    {
+        return $this->hasMany(Examen::class, 'teacher_id');
+    }
+
+    public function aulas()
+    {
+        return $this->hasMany(Aula::class, 'teacher_id');
+    }
+
+
 }
