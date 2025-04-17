@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Settings\Profile;
 use App\Livewire\Settings\Password;
@@ -51,10 +52,15 @@ Route::middleware(['auth', 'role:teacher|super-admin'])->group(function () {
 
     Route::get('opciones/modulos/{modulo}/lessons/{lesson}/questions/{question}', [BaseController::class, 'opciones'])->name('base.opciones');
 
+    Route::get('/teachers/salones', [TeacherController::class, 'index'])->name('teachers.salones');
+    Route::get('/teachers/salon/{aula}', [TeacherController::class, 'aula'])->name('teachers.salon');
+    Route::get('/teachers/students', [TeacherController::class, 'students'])->name('teachers.students');
+    Route::post('/teachers/store_student', [TeacherController::class, 'storeStudent'])->name('teachers.storeStudent');
+    Route::get('/teachers/salon/examen/{examen}/{id}', [TeacherController::class, 'activar'])->name('teachers.activar');
+
     Route::resource('/examenes', ExamenController::class)->names('examenes');
     Route::resource('/aulas', AulaController::class)->names('aulas');
-    Route::resource('/students', StudentController::class)->names('students');
-    Route::get('/students/{student}/inscribir', [StudentController::class, 'inscribir'])->name('students.inscribir');
+    Route::get('/teachers/{student}/inscribir', [TeacherController::class, 'inscribir'])->name('teachers.inscribir');
     Route::redirect('settings', 'settings/profile');
 
     Route::get('settings/profile', Profile::class)->name('settings.profile');
@@ -62,6 +68,16 @@ Route::middleware(['auth', 'role:teacher|super-admin'])->group(function () {
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 
 
+});
+Route::middleware(['auth', 'role:student'])->group(function () {
+    Route::get('/students/inscribir', [StudentController::class, 'inscribir'])->name('students.inscribir');
+    Route::get('/students/aula/{aula}', [StudentController::class, 'aula'])->name('students.aula');
+    Route::get('/students/examen/{examen}', [StudentController::class, 'evaluar'])->name('students.evaluar');
+
+    Route::post('/students/examen/evaluacion', [StudentController::class, 'evaluacion'])->name('students.evaluacion');
+
+    Route::post('/students/store_student', [StudentController::class, 'storeStudent'])->name('students.storeStudent');
+    Route::resource('/students', StudentController::class)->names('students');
 });
 
 require __DIR__ . '/auth.php';

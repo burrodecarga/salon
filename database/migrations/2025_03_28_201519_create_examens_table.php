@@ -23,6 +23,7 @@ return new class extends Migration {
             $table->string('lesson')->nullable();
             $table->unsignedBigInteger('lesson_id')->nullable();
             $table->unsignedBigInteger('teacher_id')->nullable();
+            $table->unsignedBigInteger('activo')->nullable();
             $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

@@ -1,5 +1,5 @@
 <x-layouts.app :title="'Inscribir Estudiantes'">
-    <form class="bg-gray-200 w-1/2 mx-auto p-4 my-6 rounded" action="{{ route('students.storeStudent') }}" method="POST">
+    <form class="bg-gray-200 w-1/2 mx-auto p-4 my-6 rounded" action="{{ route('teachers.storeStudent') }}" method="POST">
         <h1 class="text-2xl text-gray-500 my-2 px-4 py-2 mx-auto text-center uppercase font-bold">Inscripción Estudiantil
         </h1>
         <p class="text-md text-gray-500 py-3  ">Estudiante: {{ $student->name }}</p>
@@ -24,7 +24,7 @@
             Inscribir Estudiante
         </button>
 
-        <a href="{{ route('students.index') }}"
+        <a href="{{ route('teachers.students') }}"
             class="px-4 py-2.5 rounded border outline-1 cursor-pointer hover:bg-yellow-400 mx-4">
             Cancelar
         </a>

@@ -54,5 +54,8 @@ class DatabaseSeeder extends Seeder
             $a->teacher_id = $teacher->id;
             $a->save();
         }
+
+
+        
     }
 }

@@ -17,6 +17,11 @@
                     <flux:navlist.item icon="home" :href="route('dashboard')"
                         current="{{ request()->routeIs('dashboard') }}" wire:navigate>{{ __('Dashboard') }}
                    </flux:navlist.item>
+                   @role('teacher')
+
+                   <flux:navlist.item icon="book-open" :href="route('teachers.salones')"
+                   current="{{ request()->routeIs('teachers.salones') }}" wire:navigate>{{ __('Salón de Clases') }}
+               </flux:navlist.item>
 
                     <flux:navlist.item icon="book-open" :href="route('listado')"
                     current="{{ request()->routeIs('listado') }}" wire:navigate>{{ __('Asignaturas') }}
@@ -30,12 +35,9 @@
                     current="{{ request()->routeIs('aulas.index') }}" wire:navigate>{{ __('Aulas o Secciones') }}
                 </flux:navlist.item>
 
-                <flux:navlist.item icon="book-open" :href="route('students.index')"
+                <flux:navlist.item icon="book-open" :href="route('teachers.students')"
                 current="{{ request()->routeIs('students.index') }}" wire:navigate>{{ __('Estudiantes') }}
             </flux:navlist.item>
-
-
-
 
                 <flux:navlist.item icon="cog-8-tooth" :href="route('asignaturas.index')"
                 current="{{ request()->routeIs('asignaturas') }}" wire:navigate>{{ __('Configurar Asignaturas') }}
@@ -44,7 +46,15 @@
             <flux:navlist.item icon="cog-8-tooth" :href="route('examenes.index')"
                 current="{{ request()->routeIs('examenes') }}" wire:navigate>{{ __('Configurar Exámenes') }}
             </flux:navlist.item>
+            @endrole
+
+            @role('student')
+            <flux:navlist.item icon="cog-8-tooth" :href="route('students.index')"
+            current="{{ request()->routeIs('students.index') }}" wire:navigate>{{ __('Salón de Clases') }}
+        </flux:navlist.item>
+            @endrole
                 </flux:navlist.group>
+
             </flux:navlist>
 
             <flux:spacer />

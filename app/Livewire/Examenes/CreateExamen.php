@@ -17,7 +17,7 @@ class CreateExamen extends Component
     public $lessons = [];
 
     public $selectedAsignatura = 0, $selectedModulo = 0, $selectedLesson = 0;
-    public $simples = 5, $multiples = 15, $preguntas = 20;
+    public $simples = 5, $multiples = 25, $preguntas = 30;
 
     protected function rules()
     {
@@ -41,15 +41,15 @@ class CreateExamen extends Component
 
 
 
-        $totalSimles = intval($this->simples);
-        $totalPreguntas = intval($this->preguntas);
-        $totalMultiples = $totalPreguntas - $totalSimles;
+        $totalSimples = intval($this->simples);
+        $totalMultiples = intval($this->multiples);
+        $this->preguntas = $totalSimples + $totalMultiples;
 
-        if ($totalMultiples < 0) {
-            $totalSimles = 0;
-            $totalPreguntas = intval($this->preguntas);
-            $totalMultiples = $totalPreguntas - $totalSimles;
-        }
+        // if ($totalMultiples < 0) {
+        //     $totalSimles = 0;
+        //     $totalPreguntas = intval($this->preguntas);
+        //     $totalMultiples = $totalPreguntas - $totalSimles;
+        // }
 
         //dd($totalPreguntas, $totalMultiples, $totalSimles);
         $asignatura = Asignatura::find($this->selectedAsignatura);
@@ -187,6 +187,7 @@ class CreateExamen extends Component
         if (is_null($value))
             return;
         $this->preguntas = $this->multiples + $value;
+        $this->preguntas = $this->simples + $this->multiples;
     }
 
     public function updatedMultiples($value)
@@ -194,6 +195,7 @@ class CreateExamen extends Component
         if (is_null($value))
             return;
         $this->preguntas = $this->simples + $value;
+        $this->preguntas = $this->simples + $this->multiples;
 
     }
 

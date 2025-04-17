@@ -31,10 +31,10 @@ class Aula extends Model
         // your other new column
     ];
 
-    // protected $casts = [
-    //     'inicio' => 'datetime:d-m-Y',
-    //     'fin' => 'datetime:d-m-Y',
-    // ];
+    protected $casts = [
+        'inicio' => 'datetime:d-m-Y',
+        'fin' => 'datetime:d-m-Y',
+    ];
 
     public function teacher()
     {

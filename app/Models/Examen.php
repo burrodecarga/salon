@@ -23,6 +23,7 @@ class Examen extends Model
         'modulo_id',
         'lesson_id',
         'teacher_id',
+        'activo'
     ];
     public function lesson()
     {
@@ -39,6 +40,13 @@ class Examen extends Model
     {
         return $this->belongsToMany(Question::class)->withTimestamps();
     }
+
+    public function pruebas()
+    {
+        return $this->hasMany(Prueba::class);
+    }
+
+
 
 
 

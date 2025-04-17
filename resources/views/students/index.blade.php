@@ -1,72 +1,42 @@
-<x-layouts.app :title="'Listado de Estudiantes'">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
+<x-layouts.app :title="'Materias del Estudiantes'">
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
-        <div class="border px-4 py-2 bg-gray-100 rounded justify-between flex"><span class="font-bold text-2xl">Profesor:
+        <div class="border px-4 py-2 bg-gray-50 rounded justify-between flex"><span class="font-bold text-2xl">Estudiante:
             </span> <span>{{ auth()->user()->name }} </span> </div>
         <div class="grid  gap-4 grid-cols-1">
             <div class="container mt-10">
-                <div class="card mx-auto w-full md:w-full text-center">
-                    <div class="card-header bg-primary text-white">
+                <div class="border rounded mx-auto w-full md:w-full text-center px-4 py-2">
+                    <div class="card-header bg-primary text-gray-600">
                         <div class="card-title flex justify-between items-center">
                             <h4>
-                                {{ __('Listado de Estudiantes') }}
+                                {{ __('Listado de Materias') }}
                             </h4>
-
-                            <a href="{{ route('students.create') }}" class="text-white cursor-pointer"
-                                title="{{ __('add student') }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </a>
+                            <a href="{{ route('students.inscribir') }}"
+                                class="hover:bg-green-300 px-4 py-2 rounded">Inscribir Materia</a>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <table id="student" class="table table-hover text-[14px]" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Nombre</th>
-                                    <th>email</th>
-                                    <th>Asignaturas</th>
-                                    <th>actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($students as $student)
-                                    <tr>
-                                        <td width="35%" class="text-justify">{{ $student->name }}</td>
-                                        <td width="20%" class="text-justify">{{ $student->email }}</td>
-                                        <td width="35%" class="text-wrap">
-                                            @foreach ($student->aulas as $aula)
-                                                <p class="text-[12px] text-wrap">{{ $aula->asignatura }}
-                                                    - {{ $aula->name }} - Prof. {{ $aula->teacher }} </p>
-                                            @endforeach
-                                        </td>
-
-                                        <td width="100%" class="flex gap-8 items-center flex-col justify-between">
-                                            <a href="{{ route('students.inscribir', $student->id) }}"
-                                                class="text-green-600" title="Inscribir en asignatura">
-
-                                                <flux:icon.folder-plus />
-                                            </a>
-
-                                            <form action="{{ route('students.destroy', $student) }}" method="POST"
-                                                class="text-red-600 items-center text-justify h-full"
-                                                title="eliminar exámen">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit">
-                                                    <flux:icon.trash />
-                                                </button>
-
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                    <div class="">
+                        @foreach ($asignaturas as $asignatura)
+                            <div class="border my-2 rounded hover:bg-green-300">
+                                <a href="{{ route('students.aula', $asignatura->id) }}"
+                                    class="flex gap-4 justify-between p-8 items-center">
+                                    <div>
+                                        <h1>{{ $asignatura->asignatura }}
+                                        </h1>
+                                        <h2>{{ $asignatura->name }}</h2>
+                                        <h2>Prof. {{ $asignatura->teacher }}</h2>
+                                    </div>
+                                    <div>
+                                        <h1>Lapso o péríodo
+                                        </h1>
+                                        <h2>Fecha de Inicio: {{ $asignatura->inicio->format('d-m-Y') }}</h2>
+                                        <h2>Fecha Culminación: {{ $asignatura->fin->format('d-m-Y') }}</h2>
+                                        <h3>Días restantes
+                                            :{{ floor(now()->diffInDays($asignatura->fin)) > 0 ? floor(now()->diffInDays($asignatura->fin)) : 'EVENTO PASADO' }}
+                                        </h3>
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
 
@@ -84,7 +54,7 @@
 
                 <script>
                     $(document).ready(function() {
-                        $('#student').DataTable({
+                        $('#teacher').DataTable({
                             "columnDefs": [{
                                 "targets": [3],
                                 "orderable": false
