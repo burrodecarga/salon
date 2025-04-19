@@ -95,14 +95,14 @@
                 </div>
             </div>
             <div
-                class="relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-                <x-placeholder-pattern
-                    class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20" />
+                class="col-span-1 md:col-span-2 p-6 w-full bg-white rounded-xl border border-neutral-200 dark:border-neutral-700">
+                @livewire('teacher-interview-control', ['aula' => $aula])
             </div>
-        </div>
-        <div
-            class="relative h-full flex-1 overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-            <x-placeholder-pattern class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20" />
+
+            <div
+                class="col-span-1 md:col-span-2 p-6 w-full bg-white rounded-xl border border-neutral-200 dark:border-neutral-700">
+                @livewire('listado-de-notas', ['aula' => $aula])
+            </div>
         </div>
     </div>
     @push('script')
