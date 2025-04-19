@@ -7,6 +7,7 @@
     <form action="{{ route('students.evaluacion') }}" method="POST">
         @method('POST')
         @csrf
+        <input type="hidden" name="aula_id" value="{{ $aula->id }}">
         <input type="hidden" name="student_id" value="{{ $student->id }}">
         <input type="hidden" name="examen_id" value="{{ $examen->id }}">
         @foreach ($questions as $key => $question)

@@ -4,7 +4,8 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite",
-        "watch": "vite build --watch"
+        "watch": "vite build --watch",
+        "host": "php artisan serve --host 192.168.1.11"
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.0.7",

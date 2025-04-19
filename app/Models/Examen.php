@@ -19,6 +19,7 @@ class Examen extends Model
         'asignatura',
         'modulo',
         'lesson',
+        'aula_id',
         'asignatura_id',
         'modulo_id',
         'lesson_id',

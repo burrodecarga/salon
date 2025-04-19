@@ -18,19 +18,19 @@
                         @foreach ($asignaturas as $asignatura)
                             <div class="border my-2 rounded hover:bg-green-300">
                                 <a href="{{ route('students.aula', $asignatura->id) }}"
-                                    class="flex gap-4 justify-between p-8 items-center">
+                                    class="flex flex-col gap-4 justify-between p-8 items-center border-neutral-500">
                                     <div>
-                                        <h1>{{ $asignatura->asignatura }}
+                                        <h1 class="uppercase font-bold text-gray-600 text-2xl">{{ $asignatura->asignatura }}
                                         </h1>
                                         <h2>{{ $asignatura->name }}</h2>
-                                        <h2>Prof. {{ $asignatura->teacher }}</h2>
+                                        <h2 class="italic text-[14px]">Prof. {{ $asignatura->teacher }}</h2>
                                     </div>
                                     <div>
-                                        <h1>Lapso o péríodo
+                                        <h1 class="uppercase font-bold text-gray-600 text-[16px]">Lapso o péríodo
                                         </h1>
-                                        <h2>Fecha de Inicio: {{ $asignatura->inicio->format('d-m-Y') }}</h2>
-                                        <h2>Fecha Culminación: {{ $asignatura->fin->format('d-m-Y') }}</h2>
-                                        <h3>Días restantes
+                                        <h2 class="text-[12px] text-justify">Fecha de Inicio: {{ $asignatura->inicio->format('d-m-Y') }}</h2>
+                                        <h2 class="text-[12px] text-justify">Fecha Culminación: {{ $asignatura->fin->format('d-m-Y') }}</h2>
+                                        <h3 class="text-[12px] text-justify">Días restantes
                                             :{{ floor(now()->diffInDays($asignatura->fin)) > 0 ? floor(now()->diffInDays($asignatura->fin)) : 'EVENTO PASADO' }}
                                         </h3>
                                     </div>

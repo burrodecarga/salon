@@ -1,7 +1,11 @@
 <x-layouts.app :title="'Actividades de Aula'">
-    <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
+    <div class="flex h-full w-full flex-1 flex-col gap-1 rounded-xl">
         <div class="border px-4 py-2 bg-gray-50 rounded justify-between flex"><span class="font-bold text-2xl">Estudiante:
             </span> <span>{{ auth()->user()->name }} </span> </div>
+        <div class="border px-4 py-2 bg-gray-50 rounded justify-between flex"><span class="font-bold text-2xl">Asignatura:
+            </span> <span>{{ $asignatura->name }} </span> </div>
+        <div class="border px-4 py-2 bg-gray-50 rounded justify-between flex"><span class="font-bold text-2xl">Sección:
+            </span> <span>{{ $aula->name }} </span> </div>
         <div class="grid  gap-4 grid-cols-1">
             <div class="container mt-10">
                 <div class="border rounded mx-auto w-full md:w-full text-center px-4 py-2">
@@ -14,15 +18,19 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="border border-neutral-300 rounded px-4 py-2">
-                            <h2 class="text-center">Evaluaciones</h2>
+                        <div class="border border-neutral-600 rounded px-4 py-2">
+                            <h2 class="text-center">Evaluaciones Pendientes</h2>
                             @foreach ($examenes as $examen)
-                                <a href="{{ route('students.evaluar', $examen) }}"
-                                    class="bg-neutral-400 px-4 py-2 block rounded border hover:bg-green-500 hover:text-white">
+                                <a href="{{ route('students.evaluar', [$examen, $aula]) }}"
+                                    class="bg-neutral-100 px-4 py-2 block rounded border hover:bg-green-500 hover:text-white">
                                     <div>{{ $examen->name }}</div>
                                     <div>{{ $examen->asignatura }}</div>
                                 </a>
                             @endforeach
+                        </div>
+                        <div class="border border-neutral-600 rounded px-4 py-2">
+                            <h2 class="text-center">Intervenciones en clase</h2>
+                            @livewire('add-interview', ['aula' => $aula])
 
                         </div>
                     </div>

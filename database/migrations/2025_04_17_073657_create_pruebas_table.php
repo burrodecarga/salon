@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('correct');
             $table->integer('base');
             $table->decimal('nota',8,2)->default(0);
+            $table->unsignedBigInteger('aula_id')->nullable();
             $table->unsignedBigInteger('examen_id')->nullable();
             $table->unsignedBigInteger('teacher_id')->nullable();
             $table->unsignedBigInteger('student_id')->nullable();

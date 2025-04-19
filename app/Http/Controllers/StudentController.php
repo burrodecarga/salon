@@ -11,6 +11,7 @@ use App\Models\Student;
 use App\Models\Prueba;
 use App\Models\Examen;
 use App\Models\Aula;
+use App\Models\Asignatura;
 
 class StudentController extends Controller
 {
@@ -71,19 +72,26 @@ class StudentController extends Controller
     public function aula(Aula $aula)
     {
         $examenes = Examen::where('asignatura_id', $aula->asignatura_id)->where('teacher_id', $aula->teacher_id)->where('activo', 1)->get();
-        return view('students.aula', compact('aula', 'examenes'));
+        $asignatura=Asignatura::find($aula->asignatura_id);
+        return view('students.aula', compact('aula', 'examenes','asignatura'));
     }
 
-    public function evaluar(Examen $examen)
-    {
+    public function evaluar(Examen $examen,Aula $aula)    {
+
+        $sinDerecho = Prueba::where('student_id',auth()->user()->id)->exists();
+        if($sinDerecho){
+            flash()->error('Evaluación Realizada!');
+            return redirect()->back();
+        }
         $perPage = 50;
         $student = Student::find(auth()->user()->id);
         $questions = $examen->questions()->inRandomOrder()->get();
-        return view('students.evaluar', compact('student', 'examen', 'questions', 'perPage'));
+        return view('students.evaluar', compact('student', 'examen', 'questions', 'perPage','aula'));
     }
 
     public function evaluacion(Request $request)
     {
+        //dd($request->all());
         $array = $request->all();
 
         $mapped = Arr::where($array, function (string $value, string $key) {
@@ -93,8 +101,8 @@ class StudentController extends Controller
         });
 
 
-        $array=[];
-        foreach($mapped as $key=>$item){
+        $array = [];
+        foreach ($mapped as $key => $item) {
             $k = explode("p-", $key);
             $r = explode("r-", $item);
             $array[$k[1]] = $r[1];
@@ -102,62 +110,61 @@ class StudentController extends Controller
 
         //dd($array);
 
-     $respuestas_correctas = DB::table('questions')
-    ->join('options', 'questions.id', '=', 'options.question_id')
-    // ->where('question.examen_id',$request->input('examen_id'))
-    ->where('options.is_true','1')
-    ->select('questions.id', 'options.id','options.question_id')
-    ->get()->toArray();
+        $respuestas_correctas = DB::table('questions')
+            ->join('options', 'questions.id', '=', 'options.question_id')
+            // ->where('question.examen_id',$request->input('examen_id'))
+            ->where('options.is_true', '1')
+            ->select('questions.id', 'options.id', 'options.question_id')
+            ->get()->toArray();
 
 
 
-    $respuestas_array=[];
-        foreach($respuestas_correctas as $key=>$item){
-             $respuestas_array[$item->question_id] = $item->id;
+        $respuestas_array = [];
+        foreach ($respuestas_correctas as $key => $item) {
+            $respuestas_array[$item->question_id] = $item->id;
         }
 
         $sorted_examen = Arr::sort($array);
         $sorted_correctas = Arr::sort($respuestas_array);
 
 
-        $respuestas_de_examen_correctas = Arr::where($sorted_examen, function (string|int $value, int $key) use($sorted_correctas) {
+        $respuestas_de_examen_correctas = Arr::where($sorted_examen, function (string|int $value, int $key) use ($sorted_correctas) {
 
             if (in_array($value, $sorted_correctas)) {
-               return $value;
+                return $value;
             }
         });
 
-    //dd($respuestas_de_examen_correctas,$sorted_examen,$sorted_correctas);
-    //   $prueba = json_encode($sorted_correctas);
+        //dd($respuestas_de_examen_correctas,$sorted_examen,$sorted_correctas);
+        //   $prueba = json_encode($sorted_correctas);
 //dd($prueba);
-$examen = Examen::find($request->examen_id);
-$cant_preguntas_examen =$examen->questions->count();
-$base =20;
-$cant_respuestas_correctas = count($sorted_correctas);
-if($respuestas_de_examen_correctas<>0 && $cant_preguntas_examen<>0){
-    $nota=($base/$cant_preguntas_examen)*count($respuestas_de_examen_correctas);
-}else{
-    $nota=1;
-}
+        $examen = Examen::find($request->examen_id);
+        $cant_preguntas_examen = $examen->questions->count();
+        $base = 20;
+        $cant_respuestas_correctas = count($sorted_correctas);
+        if ($respuestas_de_examen_correctas <> 0 && $cant_preguntas_examen <> 0) {
+            $nota = ($base / $cant_preguntas_examen) * count($respuestas_de_examen_correctas);
+        } else {
+            $nota = 1;
+        }
 
-$prueba = Prueba::create([
-'fecha'=>now(),
-'correct_answers'=>json_encode($sorted_correctas),
-'student_answers'=>json_encode($sorted_examen),
-'student_correct'=>json_encode($respuestas_de_examen_correctas),
-'questions'=>$cant_preguntas_examen,
-'correct'=>count($respuestas_de_examen_correctas),
-'base'=>$base,
-'nota'=>$nota,
-'examen_id'=>$examen->id,
-'teacher_id'=>$examen->teacher_id,
-'student_id'=>auth()->user()->id,
-]);
+        $prueba = Prueba::create([
+            'fecha' => now(),
+            'correct_answers' => json_encode($sorted_correctas),
+            'student_answers' => json_encode($sorted_examen),
+            'student_correct' => json_encode($respuestas_de_examen_correctas),
+            'questions' => $cant_preguntas_examen,
+            'correct' => count($respuestas_de_examen_correctas),
+            'base' => $base,
+            'nota' => $nota,
+            'examen_id' => $examen->id,
+            'teacher_id' => $examen->teacher_id,
+            'student_id' => auth()->user()->id,
+        ]);
 
-dd($prueba);
-
+        //dd($prueba);
+         $aula_id=Aula::find($request->input('aula_id'))->id;
+        return redirect()->route('students.aula',$aula_id);
     }
-
-
 
 }
