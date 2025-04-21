@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Student;
 use App\Models\Examen;
 use App\Http\Resources\ExamenResource;
 use App\Filters\ExamenFilter;
@@ -52,6 +53,20 @@ class ApiController extends Controller
         ], 200);
     }
 
+    public function aulas(Request $request)
+    {
+
+        $student = Student::find($request->input('id'));
+        if (!$student) {
+            return response()->json([
+                "message" => "registro no encontrado",
+                "status" => 404
+            ], 404);
+        }
+        $aulas = $student->aulas;
+        return new ExamenResource($aulas);
+    }
+
 
     public function examenes(Request $request)
     {
@@ -59,6 +74,12 @@ class ApiController extends Controller
         $queryItems = $filter->transform($request);
         $examenes = Examen::where($queryItems);
         return new ExamenResource($examenes->paginate()->appends($request->query()));
+    }
 
+    public function check()
+    {
+        $check = auth('api')->user();
+        var_dump($check);
+        return response()->json($check);
     }
 }
