@@ -21,6 +21,11 @@ Route::prefix('v1')->group(function () {
 
     Route::get('check-status', [ApiController::class, 'check']);
     Route::get('/aulas', [ApiController::class, 'aulas']);
+    Route::get('/aula', [ApiController::class, 'aula']);
+    Route::get('/asignatura', [ApiController::class, 'asignatura']);
 
+    Route::get('/lecciones', [ApiController::class, 'lecciones']);
+    Route::get('/leccion', [ApiController::class, 'leccion']);
+    Route::get('/evaluacion', [ApiController::class, 'evaluacion']);
     Route::post('/examenes', [ApiController::class, 'examenes'])->middleware('auth:sanctum');
 });

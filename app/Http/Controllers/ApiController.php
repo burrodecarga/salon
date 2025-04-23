@@ -7,8 +7,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Aula;
+use App\Models\Lesson;
 use App\Models\Student;
 use App\Models\Examen;
+use App\Models\Asignatura;
 use App\Http\Resources\ExamenResource;
 use App\Filters\ExamenFilter;
 
@@ -48,7 +51,7 @@ class ApiController extends Controller
         $token = $user->createToken('edwin')->plainTextToken;
 
         return response()->json([
-            'user' => ['name' => $user->name, 'email' => $user->email],
+            'user' => ['id' => $user->id, 'name' => $user->name, 'email' => $user->email],
             'token' => $token
         ], 200);
     }
@@ -67,6 +70,33 @@ class ApiController extends Controller
         return new ExamenResource($aulas);
     }
 
+    public function aula(Request $request)
+    {
+
+        $aula = Aula::where('id', $request->input('id'))->first();
+        if (!$aula) {
+            return response()->json([
+                "message" => "registro no encontrado",
+                "status" => 404
+            ], 404);
+        }
+        return new ExamenResource($aula);
+    }
+
+    public function asignatura(Request $request)
+    {
+
+        $asignatura = Asignatura::find($request->input('id'));
+        if (!$asignatura) {
+            return response()->json([
+                "message" => "registro no encontrado",
+                "status" => 404
+            ], 404);
+        }
+        $modulos = $asignatura->modulos;
+        return new ExamenResource($modulos);
+    }
+
 
     public function examenes(Request $request)
     {
@@ -79,7 +109,39 @@ class ApiController extends Controller
     public function check()
     {
         $check = auth('api')->user();
-        var_dump($check);
+        //var_dump($check);
         return response()->json($check);
+    }
+
+
+    public function lecciones(Request $request)
+    {
+        $lecciones = Lesson::where('modulo_id', $request->input('id'))->get();
+        if (!$lecciones) {
+            return response()->json([
+                "message" => "registro no encontrado",
+                "status" => 404
+            ], 404);
+        }
+        return new ExamenResource($lecciones);
+    }
+
+    public function evaluacion(Request $request)
+    {
+
+        $examen = Examen::where('asignatura_id', $request->input('asignatura_id'))
+            ->where('activo', '1')
+            ->where('teacher_id', $request->input('teacher_id'))
+            ->first();
+        //return $examen;
+        $questions = $examen->questions()->inRandomOrder()->get();
+        if (!$questions) {
+            return response()->json([
+                "message" => "registro no encontrado",
+                "status" => 404
+            ], 404);
+        }
+        return new ExamenResource($questions);
+
     }
 }
