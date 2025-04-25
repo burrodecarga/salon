@@ -22,7 +22,7 @@ class Teacher extends User
         return $this->hasMany(Asignatura::class, 'teacher_id');
     }
 
-    public function examenes()
+    public function examens()
     {
         return $this->hasMany(Examen::class, 'teacher_id');
     }

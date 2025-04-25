@@ -33,7 +33,7 @@ class Question extends Model
         return $this->hasMany(Option::class);
     }
 
-    public function examenes()
+    public function examens()
     {
         return $this->belongsToMany(Examen::class)->withTimestamps();
     }

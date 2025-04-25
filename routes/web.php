@@ -59,6 +59,7 @@ Route::middleware(['auth', 'role:teacher|super-admin'])->group(function () {
     Route::get('/teachers/salon/examen/{examen}/{id}', [TeacherController::class, 'activar'])->name('teachers.activar');
 
     Route::resource('/examenes', ExamenController::class)->names('examenes');
+    Route::get('/examenes/activar/{examen}', [ExamenController::class, 'activar'])->name('examenes.activar');
     Route::resource('/aulas', AulaController::class)->names('aulas');
     Route::get('/teachers/{student}/inscribir', [TeacherController::class, 'inscribir'])->name('teachers.inscribir');
     Route::redirect('settings', 'settings/profile');

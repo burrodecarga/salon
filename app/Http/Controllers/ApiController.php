@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
+use App\Services\ExamenService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use App\Providers\ExamenServiceProvider;
 use App\Models\User;
 use App\Models\Aula;
 use App\Models\Lesson;
@@ -59,6 +61,7 @@ class ApiController extends Controller
     public function aulas(Request $request)
     {
 
+
         $student = Student::find($request->input('id'));
         if (!$student) {
             return response()->json([
@@ -98,21 +101,32 @@ class ApiController extends Controller
     }
 
 
-    public function examenes(Request $request)
+    // public function examenes(Request $request)
+    // {
+    //     $filter = new ExamenFilter();
+    //     $queryItems = $filter->transform($request);
+    //     $examenes = Examen::where($queryItems);
+    //     return new ExamenResource($examenes->paginate()->appends($request->query()));
+    // }
+
+    public function get_preguntas_por_examen(ExamenService $examenService, Request $request)
     {
-        $filter = new ExamenFilter();
-        $queryItems = $filter->transform($request);
-        $examenes = Examen::where($queryItems);
-        return new ExamenResource($examenes->paginate()->appends($request->query()));
+
+        return response()->json(["a" => $request->input('examen_id')]);
+        $result = $examenService->get_preguntas_por_examen($request->input('examen_id'));
+
+        return $result;
+
+
     }
 
-    public function check()
+    public function preguntas_por_asignatura(ExamenService $examenService, Request $request)
     {
-        $check = auth('api')->user();
-        //var_dump($check);
-        return response()->json($check);
-    }
+        //return response()->json(["a" => $request->input('asignatura_id'), "b" => $request->input('teacher_id')]);
+        $result = $examenService->preguntas_por_asignatura($request->input('asignatura_id'), $request->input('teacher_id'));
 
+        return $result;
+    }
 
     public function lecciones(Request $request)
     {
@@ -129,19 +143,23 @@ class ApiController extends Controller
     public function evaluacion(Request $request)
     {
 
-        $examen = Examen::where('asignatura_id', $request->input('asignatura_id'))
-            ->where('activo', '1')
-            ->where('teacher_id', $request->input('teacher_id'))
-            ->first();
-        //return $examen;
-        $questions = $examen->questions()->inRandomOrder()->get();
-        if (!$questions) {
-            return response()->json([
-                "message" => "registro no encontrado",
-                "status" => 404
-            ], 404);
-        }
-        return new ExamenResource($questions);
+        $examen = Examen::where('teacher_id', $request->input('id'))
+            ->where('asignatura_id', $request->input('jd'))
+            ->where('activo', 1)->get()->first();
+        return new ExamenResource($examen);
+    }
 
+    public function preguntas(Request $request)
+    {
+        $examen = Examen::find($request->id);
+        $model = $examen->questions;
+        return new ExamenResource($model);
+    }
+
+    public function respuestas(Request $request)
+    {
+        $question = Question::find($request->id);
+        $model = $question->options;
+        return new ExamenResource($model);
     }
 }

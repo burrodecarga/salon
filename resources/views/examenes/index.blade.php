@@ -48,8 +48,13 @@
                                         <td width="100%" class="flex gap-8 items-center flex-wrap">
                                             <a href="{{ route('examenes.show', $examen->id) }}" class="text-green-600"
                                                 title="ver preguntas de exámen">
-
                                                 <flux:icon.squares-plus />
+                                            </a>
+                                            <a href="{{ route('examenes.activar', $examen->id) }}"
+                                                class="text-green-600"
+                                                title="Activar/Desactivar y Actualizar preguntas de exámen">
+                                                <flux:icon.clipboard-document-check
+                                                    class="{{ $examen->activo == 1 ? 'text-green-500' : 'text-red-500' }} rounded-full " />
                                             </a>
 
                                             <form action="{{ route('examenes.destroy', $examen) }}" method="POST"

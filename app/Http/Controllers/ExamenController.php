@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pregunta;
+use App\Models\Prototipo;
 use App\Models\Teacher;
 use App\Models\Examen;
 use App\Http\Requests\UpdateExamenRequest;
@@ -17,7 +19,7 @@ class ExamenController extends Controller
         $teacher = Teacher::find(auth()->user()->id);
         $asignaturas_id = $teacher->asignaturas()->pluck('id')->toArray();
         $asignaturas = $teacher->asignaturas;
-        $examenes = $teacher->examenes;
+        $examenes = $teacher->examens;
 
         return view('examenes.index', compact('asignaturas', 'examenes'));
     }
@@ -47,9 +49,9 @@ class ExamenController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($examene)
+    public function show($examen)
     {
-        $examen = Examen::find($examene);
+        $examen = Examen::find($examen);
         $questions = $examen->questions()->inRandomOrder()->get();
         //dd($examen);
         return view('examenes.show', compact('examen', 'questions'));
@@ -78,4 +80,94 @@ class ExamenController extends Controller
     {
         //
     }
+
+    public function activar(Examen $examen)
+    {
+        $questions = $examen->questions;//
+        if ($questions->count() == 0) {
+            flash()->error('El Exámen no tiene preguntas, debe EDITAR EXÁMEN y crear preguntas...!');
+            return redirect()->route('examenes.index');
+
+        }
+        ;
+        foreach ($questions as $question) {
+            foreach ($question->options as $option) {
+                $pregunta = Pregunta::where('examen_id', $examen->id)
+                    ->where('asignatura_id', $examen->asignatura_id)
+                    ->where('teacher_id', $examen->teacher_id)
+                    ->where('question_id', $question->id)
+                    ->where('option_id', $option->id)
+                    ->first();
+                if ($pregunta) {
+                    $pregunta->update([
+
+                        'answer' => $option->answer,
+                        'question' => $question->question,
+                        'is_true' => $option->is_true,
+                    ]);
+                    $pregunta->save();
+                    //dd($pregunta->question_id, 'PREGUNTA', $question->question, $pregunta->question);
+                } else {
+                    Pregunta::create([
+                        'answer' => $option->answer,
+                        'question' => $question->question,
+                        'is_true' => $option->is_true,
+                        'examen_id' => $examen->id,
+                        'asignatura_id' => $examen->asignatura_id,
+                        'teacher_id' => $examen->teacher_id,
+                        'question_id' => $option->question_id,
+                        'option_id' => $option->id,
+                    ]);
+                    //dd('NO EXISTE y SE CREÓ');
+                }
+            }
+        }
+        if ($examen->activo == 1) {
+            $examen->activo = 0;
+            flash()->warning('El Exámen está desactivado...!');
+        } else {
+            $examen->activo = 1;
+            flash()->success('El Exámen está activado...!');
+        }
+        $examen->save();
+        return redirect()->route('examenes.index');
+    }
+
+
+    public function movil(Examen $examen)
+    {
+        $questions = $examen->questions;//
+        if ($questions->count() == 0) {
+            flash()->error('El Exámen no tiene preguntas, debe EDITAR EXÁMEN y crear preguntas...!');
+            return redirect()->route('examenes.index');
+
+        }
+        ;
+        foreach ($questions as $question) {
+            $pregunta = Prototipo::where('examen_id', $examen->id)
+                ->where('asignatura_id', $examen->asignatura_id)
+                ->where('teacher_id', $examen->teacher_id)
+                ->where('question_id', $question->id)
+                ->first();
+            $opciones = [];
+            foreach ($question->options as $key => $option) {
+                $temp = $option->is_true . '-' . $option->answer;
+                array_push($opciones, $temp);
+            }
+
+            dd($opciones);
+
+            if ($examen->activo == 1) {
+                $examen->activo = 0;
+                flash()->warning('El Exámen está desactivado...!');
+            } else {
+                $examen->activo = 1;
+                flash()->success('El Exámen está activado...!');
+            }
+            $examen->save();
+            return redirect()->route('examenes.index');
+        }
+    }
 }
+
+
