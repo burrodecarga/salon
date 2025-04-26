@@ -42,6 +42,11 @@ class Examen extends Model
         return $this->belongsToMany(Question::class)->withTimestamps();
     }
 
+    public function block()
+    {
+        return $this->hasOne(Block::class);
+    }
+
     public function pruebas()
     {
         return $this->hasMany(Prueba::class);
@@ -51,6 +56,12 @@ class Examen extends Model
     {
         return $this->hasMany(Pregunta::class);
     }
+
+    public function pruototipos()
+    {
+        return $this->hasMany(Prototipo::class);
+    }
+
 
 
 

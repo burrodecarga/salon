@@ -45,7 +45,7 @@
                                         <td width="" class="text-wrap">
                                             {{ $examen->level }}
                                         </td>
-                                        <td width="100%" class="flex gap-8 items-center flex-wrap">
+                                        <td width="100%" class="flex gap-10 items-center flex-wrap">
                                             <a href="{{ route('examenes.show', $examen->id) }}" class="text-green-600"
                                                 title="ver preguntas de exámen">
                                                 <flux:icon.squares-plus />
@@ -54,6 +54,12 @@
                                                 class="text-green-600"
                                                 title="Activar/Desactivar y Actualizar preguntas de exámen">
                                                 <flux:icon.clipboard-document-check
+                                                    class="{{ $examen->activo == 1 ? 'text-green-500' : 'text-red-500' }} rounded-full " />
+                                            </a>
+
+                                            <a href="{{ route('teachers.movil', $examen->id) }}" class="text-green-600"
+                                                title="Activar/Desactivar y Actualizar preguntas de exámen">
+                                                <flux:icon.phone-arrow-down-left
                                                     class="{{ $examen->activo == 1 ? 'text-green-500' : 'text-red-500' }} rounded-full " />
                                             </a>
 

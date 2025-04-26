@@ -33,4 +33,5 @@ Route::prefix('v1')->group(function () {
     Route::get('/respuestas', [ApiController::class, 'respuestas']);
     Route::get('/get_preguntas_por_examen', [ApiController::class, 'get_preguntas_por_examen']);
     Route::post('/examenes', [ApiController::class, 'examenes'])->middleware('auth:sanctum');
+    Route::get('/get_preguntas_por_block', [ApiController::class, 'get_preguntas_por_block']);
 });

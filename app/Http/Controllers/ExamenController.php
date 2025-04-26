@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Block;
 use App\Models\Pregunta;
 use App\Models\Prototipo;
 use App\Models\Teacher;
@@ -134,40 +135,7 @@ class ExamenController extends Controller
     }
 
 
-    public function movil(Examen $examen)
-    {
-        $questions = $examen->questions;//
-        if ($questions->count() == 0) {
-            flash()->error('El Exámen no tiene preguntas, debe EDITAR EXÁMEN y crear preguntas...!');
-            return redirect()->route('examenes.index');
 
-        }
-        ;
-        foreach ($questions as $question) {
-            $pregunta = Prototipo::where('examen_id', $examen->id)
-                ->where('asignatura_id', $examen->asignatura_id)
-                ->where('teacher_id', $examen->teacher_id)
-                ->where('question_id', $question->id)
-                ->first();
-            $opciones = [];
-            foreach ($question->options as $key => $option) {
-                $temp = $option->is_true . '-' . $option->answer;
-                array_push($opciones, $temp);
-            }
-
-            dd($opciones);
-
-            if ($examen->activo == 1) {
-                $examen->activo = 0;
-                flash()->warning('El Exámen está desactivado...!');
-            } else {
-                $examen->activo = 1;
-                flash()->success('El Exámen está activado...!');
-            }
-            $examen->save();
-            return redirect()->route('examenes.index');
-        }
-    }
 }
 
 

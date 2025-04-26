@@ -101,13 +101,7 @@ class ApiController extends Controller
     }
 
 
-    // public function examenes(Request $request)
-    // {
-    //     $filter = new ExamenFilter();
-    //     $queryItems = $filter->transform($request);
-    //     $examenes = Examen::where($queryItems);
-    //     return new ExamenResource($examenes->paginate()->appends($request->query()));
-    // }
+
 
     public function get_preguntas_por_examen(ExamenService $examenService, Request $request)
     {
@@ -161,5 +155,14 @@ class ApiController extends Controller
         $question = Question::find($request->id);
         $model = $question->options;
         return new ExamenResource($model);
+    }
+
+
+    public function get_preguntas_por_block(ExamenService $examenService, Request $request)
+    {
+        //return response()->json(["a" => $request->input('asignatura_id'), "b" => $request->input('teacher_id')]);
+        $result = $examenService->preguntas_por_block($request->input('asignatura_id'), $request->input('teacher_id'));
+
+        return $result;
     }
 }

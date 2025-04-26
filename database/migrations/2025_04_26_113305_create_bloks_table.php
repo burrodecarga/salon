@@ -10,18 +10,16 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('prototipos', function (Blueprint $table) {
+        Schema::create('blocks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('examen_id')->nullable();
-            $table->unsignedBigInteger('asignatura_id')->nullable();
-            $table->unsignedBigInteger('teacher_id')->nullable();
-            $table->unsignedBigInteger('question_id')->nullable();
             $table->text('question');
             $table->text('option_0');
             $table->text('option_1');
             $table->text('option_2')->nullable();
             $table->text('option_3')->nullable();
             $table->text('option_4')->nullable();
+            $table->unsignedBigInteger('question_id')->nullable();
+            $table->unsignedBigInteger('examen_id')->nullable();
             $table->foreign('examen_id')->references('id')->on('examens')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
@@ -32,6 +30,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('prototipos');
+        Schema::dropIfExists('blocks');
     }
 };

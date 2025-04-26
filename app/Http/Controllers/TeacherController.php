@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Block;
+use App\Models\Prototipo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Teacher;
@@ -71,5 +73,87 @@ class TeacherController extends Controller
         flash()->success('Estudiante inscrito correctamente!');
         return redirect()->route('teachers.students');
 
+    }
+
+    public function movil(Examen $examen)
+    {
+        $questions = $examen->questions;//
+        if ($questions->count() == 0) {
+            flash()->error('El Exámen no tiene preguntas, debe EDITAR EXÁMEN y crear preguntas...!');
+            return redirect()->route('examenes.index');
+
+        }
+        $opciones = [];
+        $message = '';
+        foreach ($questions as $question) {
+            $prototipo_pregunta = Prototipo::where('examen_id', $examen->id)
+                ->where('asignatura_id', $examen->asignatura_id)
+                ->where('teacher_id', $examen->teacher_id)
+                ->where('question_id', $question->id)
+                ->first();
+
+            foreach ($question->options as $key => $option) {
+                $temp = $question->id . '-' . $option->id . '-' . $option->is_true . '-' . $option->answer;
+                array_push($opciones, $temp);
+            }
+
+            $op0 = $opciones[0];
+            $op1 = $opciones[1];
+            $op2 = isset($opciones, $opciones[2]) ? $opciones[2] : null;
+            $op3 = isset($opciones[3]) ? $opciones[3] : null;
+            $op4 = isset($opciones[4]) ? $opciones[4] : null;
+
+            Block::updateOrCreate([
+                'question_id' => $option->question_id,
+                'examen_id' => $examen->id
+            ], [
+
+                'question' => $question->question,
+                'option_0' => $op0,
+                'option_1' => $op1,
+                'option_2' => $op2,
+                'option_3' => $op3,
+                'option_4' => $op4,
+            ]);
+
+            if ($examen->activo == 1) {
+                $examen->activo = 0;
+                $message = ('El Exámen está desactivado...!');
+            } else {
+                $examen->activo = 1;
+                $message = ('El Exámen está activado...!');
+            }
+            $examen->save();
+            if (is_null($prototipo_pregunta)) {
+                //crear pregunta
+                Prototipo::create([
+                    'examen_id' => $examen->id,
+                    'asignatura_id' => $examen->asignatura_id,
+                    'teacher_id' => $examen->teacher_id,
+                    'question_id' => $question->id,
+                    'question' => $question->question,
+                    'option_0' => $examen->block->option_0,
+                    'option_1' => $examen->block->option_1,
+                    'option_2' => $examen->block->option_2,
+                    'option_3' => $examen->block->option_3,
+                ]);
+            } else {
+
+                $prototipo_pregunta->update([
+                    'question_id' => $question->id,
+                    'question' => $question->question,
+                    'option_0' => $examen->block->option_0,
+                    'option_1' => $examen->block->option_1,
+                    'option_2' => $examen->block->option_2,
+                    'option_3' => $examen->block->option_3,
+                ]);
+                $prototipo_pregunta->save();
+            }
+            ;
+
+        }
+        flash()->success($message);
+
+        return redirect()->route('examenes.index');
     }
 }
