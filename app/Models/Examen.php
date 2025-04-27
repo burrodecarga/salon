@@ -57,7 +57,7 @@ class Examen extends Model
         return $this->hasMany(Pregunta::class);
     }
 
-    public function pruototipos()
+    public function prototipos()
     {
         return $this->hasMany(Prototipo::class);
     }

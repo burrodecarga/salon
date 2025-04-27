@@ -39,12 +39,12 @@
                 current="{{ request()->routeIs('students.index') }}" wire:navigate>{{ __('Estudiantes') }}
             </flux:navlist.item>
 
+                        <flux:navlist.item icon="cog-8-tooth" :href="route('examenes.index')"
+                            current="{{ request()->routeIs('examenes') }}" wire:navigate>{{ __('Configurar Exámenes') }}
+                        </flux:navlist.item>
+
                 <flux:navlist.item icon="cog-8-tooth" :href="route('asignaturas.index')"
                 current="{{ request()->routeIs('asignaturas') }}" wire:navigate>{{ __('Configurar Asignaturas') }}
-            </flux:navlist.item>
-
-            <flux:navlist.item icon="cog-8-tooth" :href="route('examenes.index')"
-                current="{{ request()->routeIs('examenes') }}" wire:navigate>{{ __('Configurar Exámenes') }}
             </flux:navlist.item>
             @endrole
 

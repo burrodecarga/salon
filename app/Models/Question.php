@@ -14,6 +14,7 @@ class Question extends Model
         'question',
         'level',
         'type',
+        'explain',
         'lesson_id',
         'modulo_id',
         'asignatura_id',

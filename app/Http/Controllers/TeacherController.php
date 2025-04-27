@@ -25,7 +25,8 @@ class TeacherController extends Controller
     {
         $teacher = Teacher::find(auth()->user()->id);
         $students = $aula->students;
-        $examenes = $teacher->examenes;
+        $examenes = $teacher->examens;
+        //dd('Aqui', $teacher, $students, $examenes);
         return view('teachers.aula', compact('aula', 'teacher', 'students', 'examenes'));
     }
 
@@ -99,9 +100,9 @@ class TeacherController extends Controller
 
             $op0 = $opciones[0];
             $op1 = $opciones[1];
-            $op2 = isset($opciones, $opciones[2]) ? $opciones[2] : null;
-            $op3 = isset($opciones[3]) ? $opciones[3] : null;
-            $op4 = isset($opciones[4]) ? $opciones[4] : null;
+            $op2 = isset($opciones, $opciones[2]) ? $opciones[2] : '';
+            $op3 = isset($opciones[3]) ? $opciones[3] : '';
+            $op4 = isset($opciones[4]) ? $opciones[4] : '';
 
             Block::updateOrCreate([
                 'question_id' => $option->question_id,

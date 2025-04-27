@@ -31,5 +31,16 @@ class Asignatura extends Model
         return $this->belongsToMany(User::class, 'asignatura_student', 'asignatura_id', 'student_id');
     }
 
+    public function lessons()
+    {
+        return $this->hasManyThrough(Lesson::class, Modulo::class);
+    }
+
+    public function examens()
+    {
+        return $this->hasManyThrough(Examen::class, Teacher::class, 'id', 'teacher_id');
+    }
+
+
 
 }

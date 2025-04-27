@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lesson;
+use App\Models\Modulo;
 use App\Models\Teacher;
 use App\Models\Asignatura;
 use App\Http\Requests\UpdateAsignaturaRequest;
@@ -39,13 +41,27 @@ class AsignaturaController extends Controller
      */
     public function store(StoreAsignaturaRequest $request)
     {
-        Asignatura::create([
+        $asignatura = Asignatura::create([
             'name' => mb_strtolower($request->input('name')),
             'description' => mb_strtolower($request->input('description')),
-            'user_id' => auth()->user()->id
+            'teacher_id' => auth()->user()->id
         ]);
         //$asignaturas = Asignatura::orderBy('name')->paginate(9);
+        $modulo = Modulo::create([
+            'name' => 'módulo 1 creado por defecto',
+            'description' => 'Módulo que se crea al crear asignatura',
+            'asignatura_id' => $asignatura->id
+        ]);
+
+        Lesson::create([
+            'name' => 'Lección 1 creado por defecto',
+            'description' => 'Lección que se crea al crear asignatura',
+            'modulo_id' => $modulo->id
+        ]);
+
+
         flash()->success('Asignatura creada correctamente!');
+
         return redirect()->route('asignaturas.index');
 
     }
