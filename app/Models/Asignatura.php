@@ -31,14 +31,24 @@ class Asignatura extends Model
         return $this->belongsToMany(User::class, 'asignatura_student', 'asignatura_id', 'student_id');
     }
 
+    public function examens()
+    {
+        return $this->hasMany(Examen::class);
+    }
+
     public function lessons()
     {
         return $this->hasManyThrough(Lesson::class, Modulo::class);
     }
 
-    public function examens()
+    public function examenes_via_teacher()
     {
         return $this->hasManyThrough(Examen::class, Teacher::class, 'id', 'teacher_id');
+    }
+
+    public function examenes_via_asignatura()
+    {
+        return $this->hasManyThrough(Examen::class, Asignatura::class, 'id', 'asignatura_id');
     }
 
 

@@ -37,10 +37,17 @@ class Examen extends Model
     {
         return $this->belongsTo(User::class, 'teacher_id');
     }
+
+    public function asignatura()
+    {
+        return $this->belongsTo(Asignatura::class);
+    }
     public function questions()
     {
         return $this->belongsToMany(Question::class)->withTimestamps();
     }
+
+
 
     public function block()
     {

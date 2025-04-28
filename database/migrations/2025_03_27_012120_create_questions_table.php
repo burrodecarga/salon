@@ -13,6 +13,8 @@ return new class extends Migration {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->text('question');
+            $table->text('correct');
+            $table->text('explain')->nullable();
             $table->text('type')->default('multiple');
             $table->text('explain')->nullable();
             $table->string('level')->nullable();

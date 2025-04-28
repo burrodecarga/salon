@@ -34,6 +34,7 @@ Route::middleware(['auth', 'role:teacher|super-admin'])->group(function () {
     Route::resource('asignatura/{asignatura}/modulo/{modulo}/lessons', LessonController::class)->names('lessons');
 
     Route::resource('asignatura/{asignatura}/modulos/{modulo}/lessons/{lesson}/questions', QuestionController::class)->names('questions');
+    Route::get('asignatura/questions/{examen}', [QuestionController::class, 'create_pregunta'])->name('questions.create_pregunta');
 
     Route::resource('/options', OptionController::class)->names('options');
     Route::get('/modificar/options/{option}', [OptionController::class, 'modificar'])->name('modificar');

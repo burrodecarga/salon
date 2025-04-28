@@ -59,5 +59,7 @@
     "input question of lesson": "ingrese pregunta de lección",
     "edit option": "modificar opción",
     "list of asignaturas": "listado de asignaturas",
-    "add asignatura": "agregar asignatura"
+    "add asignatura": "agregar asignatura",
+    "type of answer": "tipo de pregunta",
+    "level of answer": "nivel de dificultad"
 }

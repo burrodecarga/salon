@@ -71,18 +71,24 @@
                                             @endforelse
                                         </div>
                                     </td>
-                                    <td width="">Exámenes: {{ $asignatura->examens->count() }} <br>
-                                        <div>
+                                    <td width="">Exámenes:
+                                        {{ $asignatura->examens->count() }} <br>
+
+                                        <div class="flex flex-col gap-6">
                                             @forelse ($asignatura->examens as $examen)
-                                                <p class="my-0.5 text-[10px]">{{ $examen->name }}</p>
+                                                <a href="{{ route('questions.create_pregunta', $examen->id) }}"
+                                                    title="crear pregunta"
+                                                    class="text-white my-0.5 text-[10px] px-4 py-2 bg-green-500">{{ $examen->name }}</a>
                                             @empty
                                                 <p>No tiene Exámenes Registradas</p>
                                             @endforelse
                                     </td>
                                     <td
                                         class="flex-col  gap-3 flex h-['100%'] justify-between  justify-items-centertext-center mx-auto w-full flex-1">
-                                        <a href="#" class="text-green-600 mx-auto flex-1">
+                                        <a href="{{ route('examenes.create') }}" class="text-green-600 mx-auto flex-1"
+                                            title="Crear exámen">
 
+                                            <flux:icon.clipboard-document-check />
                                         </a>
                                         <a href="{{ route('asignaturas.edit', $asignatura) }}" class="mx-auto">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"

@@ -13,8 +13,8 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="m1 9 4-4-4-4" />
                     </svg>
-                    <a href="{{ route('modulos.index', [$asignatura, $modulo]) }}"
-                        class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">{{ $modulo->name }}</a>
+                    <a href="" class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">{{
+                        $modulo->name }}</a>
                 </div>
             </li>
             <li aria-current="page">
@@ -24,8 +24,7 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="m1 9 4-4-4-4" />
                     </svg>
-                    <a href="{{ route('lessons.index', [$asignatura, $modulo, $lesson]) }}"
-                        class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">Lecciones</a>
+                    <a href="" class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">Lecciones</a>
                 </div>
             </li>
             </li>
@@ -36,7 +35,8 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="m1 9 4-4-4-4" />
                     </svg>
-                    <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">Crear Lección</span>
+                    <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">Crear
+                        Pregunta</span>
                 </div>
             </li>
 
@@ -46,9 +46,9 @@
         <div class="w-full p-6 mx-auto my-10">
             <h1 class="text-2xl font-bold capitalize"><strong>{{ __($title) }}</strong></h1>
             <hr>
-            <form action="{{ route('lessons.store', [$asignatura, $modulo]) }}" method="POST">
+            <form action="" method="POST">
 
-                @include('lessons.partials.form')
+                @include('lessons.partials.form_create')
             </form>
         </div>
     </div>

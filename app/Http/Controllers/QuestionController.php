@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Examen;
 use App\Models\Question;
 use App\Models\Modulo;
 use App\Models\Lesson;
@@ -14,16 +15,16 @@ class QuestionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Asignatura $asignatura, Modulo $modulo,Lesson $lesson)
+    public function index(Asignatura $asignatura, Modulo $modulo, Lesson $lesson)
     {
         $questions = $lesson->questions()->paginate(9);
-        return view('questions.index', compact('questions','lesson', 'modulo', 'asignatura'));
+        return view('questions.index', compact('questions', 'lesson', 'modulo', 'asignatura'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Asignatura $asignatura, Modulo $modulo,Lesson $lesson)
+    public function create(Asignatura $asignatura, Modulo $modulo, Lesson $lesson)
     {
         // $question = new Question();
         // $title="create question";
@@ -69,5 +70,16 @@ class QuestionController extends Controller
     public function destroy(Question $question)
     {
         //
+    }
+
+    public function create_pregunta(Examen $examen)
+    {
+        $question = new Question();
+        $asignatura = Asignatura::find($examen->asignatura_id);
+        $modulos = $asignatura->modulos;
+        $lessons = $asignatura->lessons;
+        $title = "create question";
+        $btn = "create question";
+        return view('questions.create_pregunta', compact('asignatura', 'modulos', 'lessons', 'question', 'title', 'btn'));
     }
 }
