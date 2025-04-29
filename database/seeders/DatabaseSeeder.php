@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Examen;
+use DB;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Teacher;
@@ -19,6 +21,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // $created_databse = DB::statement(DB::raw('CREATE DATABASE IF NOT EXISTS ' . 'salon'));
+
         $this->call(RoleSeeder::class);
         User::factory(10)->create();
         $this->call(ModuloSeeder::class);
@@ -44,8 +48,9 @@ class DatabaseSeeder extends Seeder
         $this->call(AsignaturaSeeder::class);
         $this->call(ModuloSeeder::class);
         $this->call(LessonSeeder::class);
-        $this->call(QuestionSeeder::class);
-        $this->call(OptionSeeder::class);
+        //$this->call(ExamenSeeder::class);
+        //$this->call(QuestionSeeder::class);
+        //$this->call(OptionSeeder::class);
 
         $as = Asignatura::inRandomOrder()->take(2)->get();
         //dd($a->name);
@@ -56,6 +61,7 @@ class DatabaseSeeder extends Seeder
         }
 
 
-        
+
+
     }
 }

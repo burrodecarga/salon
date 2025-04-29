@@ -18,10 +18,10 @@ class ExamenController extends Controller
     public function index()
     {
         $teacher = Teacher::find(auth()->user()->id);
-        $asignaturas_id = $teacher->asignaturas()->pluck('id')->toArray();
-        $asignaturas = $teacher->asignaturas;
-        $examenes = $teacher->examens;
 
+        $asignaturas_id = $teacher->asignaturas()->pluck('id')->toArray();
+        $examenes = Examen::whereIn('asignatura_id', $asignaturas_id)->get();
+        $asignaturas = $teacher->asignaturas;
         return view('examenes.index', compact('asignaturas', 'examenes'));
     }
 
@@ -53,8 +53,8 @@ class ExamenController extends Controller
     public function show($examen)
     {
         $examen = Examen::find($examen);
-        $questions = $examen->questions()->inRandomOrder()->get();
-        //dd($examen);
+        $questions = $examen->questions()->inRandomOrder()->paginate(5);
+        //dd($examen->questions);
         return view('examenes.show', compact('examen', 'questions'));
     }
 
@@ -77,9 +77,9 @@ class ExamenController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Examen $examen)
+    public function add_pregunta(Examen $examen)
     {
-        //
+        return view('examenes.add_pregunta', compact('examen'));
     }
 
     public function activar(Examen $examen)

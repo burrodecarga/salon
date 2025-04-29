@@ -29,7 +29,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/evaluacion', [ApiController::class, 'evaluacion']);
     Route::get('/preguntas', [ApiController::class, 'preguntas']);
     Route::get('/getExamen', [ApiController::class, 'getExamen']);
-    Route::get('/preguntas_por_asignatura', [ApiController::class, 'preguntas_por_asignatura']);
+    Route::get('/get_preguntas_por_asignatura', [ApiController::class, 'get_preguntas_por_asignatura']);
     Route::get('/respuestas', [ApiController::class, 'respuestas']);
     Route::get('/get_preguntas_por_examen', [ApiController::class, 'get_preguntas_por_examen']);
     Route::post('/examenes', [ApiController::class, 'examenes'])->middleware('auth:sanctum');

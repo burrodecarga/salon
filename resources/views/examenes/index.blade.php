@@ -43,21 +43,24 @@
                                             {{ $examen->type }}
                                         </td>
                                         <td width="" class="text-wrap">
-                                            {{ $examen->level }}
+                                            {{ $examen->level }} Preguntas : {{ $examen->questions->count() }}
                                         </td>
                                         <td width="100%" class="flex gap-10 items-center flex-wrap">
-                                            <a href="{{ route('examenes.show', $examen->id) }}" class="text-green-600"
-                                                title="ver preguntas de exámen">
-                                                <flux:icon.squares-plus />
-                                            </a>
-                                            <a href="{{ route('examenes.activar', $examen->id) }}"
-                                                class="text-green-600"
-                                                title="Activar/Desactivar y Actualizar preguntas de exámen">
-                                                <flux:icon.clipboard-document-check
-                                                    class="{{ $examen->activo == 1 ? 'text-green-500' : 'text-red-500' }} rounded-full " />
-                                            </a>
+                                            @if ($examen->questions->count() > 0)
+                                                <a href="{{ route('examenes.show', $examen->id) }}"
+                                                    class="text-green-600" title="ver preguntas de exámen">
+                                                    <flux:icon.newspaper />
+                                                </a>
 
-                                            <a href="{{ route('teachers.movil', $examen->id) }}" class="text-green-600"
+                                                <a href="{{ route('examenes.activar', $examen->id) }}"
+                                                    class="text-green-600"
+                                                    title="Activar/Desactivar y Actualizar preguntas de exámen">
+                                                    <flux:icon.clipboard-document-check
+                                                        class="{{ $examen->activo == 1 ? 'text-green-500' : 'text-red-500' }} rounded-full " />
+                                                </a>
+                                            @endif
+                                            <a href="{{ route('teachers.prepare_examen', $examen->id) }}"
+                                                class="text-green-600"
                                                 title="Activar/Desactivar y Actualizar preguntas de exámen">
                                                 <flux:icon.phone-arrow-down-left
                                                     class="{{ $examen->activo == 1 ? 'text-green-500' : 'text-red-500' }} rounded-full " />
@@ -97,7 +100,7 @@
                     $(document).ready(function() {
                         $('#examen').DataTable({
                             "columnDefs": [{
-                                "targets": [3],
+                                "targets": [],
                                 "orderable": false
                             }]
 

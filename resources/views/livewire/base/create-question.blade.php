@@ -2,10 +2,11 @@
     <form wire:submit="save" class="bg-slate-100 w-full mx-auto p-0 my-6 rounded">
         <div class="grid grid-cols-2 p-0 bg-slate-100 rounded gap-1 justify-between items-center">
             <div class="mb-0 bg-white px-10 py-1 rounded">
-                <x-label class="italic my-2 capitalize border-b" value="{{ __('type of answer') }}" for="level" />
+                <x-label class="italic my-2 capitalize border-b" value="{{ __('type of answer') }}" for="type" />
                 <select class="px-4 py-2 rounded w-full" wire:model="type">
-                    <option value="multiple">selección múltiple</option>
-                    <option value="simple">selección simple</option>
+                    <option value="multiple" @if ($type == 'multiple') selected @endif>selección múltiple
+                    </option>
+                    <option value="simple" @if ($type == 'simple') selected @endif>selección simple</option>
                 </select>
                 <x-input-error for="type" />
             </div>

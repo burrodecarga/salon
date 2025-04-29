@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->text('option_4')->default('');
             $table->unsignedBigInteger('question_id')->nullable();
             $table->unsignedBigInteger('examen_id')->nullable();
-            $table->foreign('examen_id')->references('id')->on('examens')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('examen_id')->references('id')->on('examens')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

@@ -114,10 +114,9 @@ class ApiController extends Controller
 
     }
 
-    public function preguntas_por_asignatura(ExamenService $examenService, Request $request)
+    public function get_preguntas_por_asignatura(ExamenService $examenService, Request $request)
     {
-        //return response()->json(["a" => $request->input('asignatura_id'), "b" => $request->input('teacher_id')]);
-        $result = $examenService->preguntas_por_asignatura($request->input('asignatura_id'), $request->input('teacher_id'));
+        $result = $examenService->get_preguntas_por_asignatura($request->input('asignatura_id'), $request->input('teacher_id'));
 
         return $result;
     }

@@ -80,6 +80,6 @@ class QuestionController extends Controller
         $lessons = $asignatura->lessons;
         $title = "create question";
         $btn = "create question";
-        return view('questions.create_pregunta', compact('asignatura', 'modulos', 'lessons', 'question', 'title', 'btn'));
+        return view('questions.create_pregunta', compact('asignatura', 'modulos', 'lessons', 'question', 'examen', 'title', 'btn'));
     }
 }

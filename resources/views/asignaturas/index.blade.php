@@ -72,13 +72,32 @@
                                         </div>
                                     </td>
                                     <td width="">Exámenes:
-                                        {{ $asignatura->examens->count() }} <br>
+                                        Total Exámenes: {{ $asignatura->examens->count() }} <br>
 
                                         <div class="flex flex-col gap-6">
                                             @forelse ($asignatura->examens as $examen)
-                                                <a href="{{ route('questions.create_pregunta', $examen->id) }}"
-                                                    title="crear pregunta"
-                                                    class="text-white my-0.5 text-[10px] px-4 py-2 bg-green-500">{{ $examen->name }}</a>
+                                                <div class="bg-blue-300 rounded border py-6">
+
+                                                    <div>
+                                                        <p>{{ $examen->asignatura }}</p>
+                                                        <p>{{ $examen->name }} Preguntas :
+                                                            {{ $examen->questions->count() }}</p>
+                                                        <p>Módulo: {{ $examen->modulo }}</p>
+                                                        <p>Lécción: {{ $examen->lesson }}</p>
+                                                    </div>
+                                                    <a href="{{ route('questions.create_pregunta', $examen->id) }}"
+                                                        title="crear pregunta"
+                                                        class="text-white my-0.5 text-[14px] px-4 py-2 bg-green-500">Crear
+                                                        Pregunta</a>
+                                                    <a href="{{ route('examenes.show', $examen->id) }}"
+                                                        title="Ver preguntas"
+                                                        class="text-white my-0.5 text-[14px] px-4 py-2 bg-green-500 hover:bg-blue-500">Ver
+                                                        Preguntas</a>
+                                                    <a href="{{ route('examenes.add_pregunta', $examen->id) }}"
+                                                        title="Agregar preguntas a Exámen"
+                                                        class="text-white my-0.5 text-[14px] px-4 py-2 bg-green-500 hover:bg-blue-500">Agregar
+                                                        Preguntas</a>
+                                                </div>
                                             @empty
                                                 <p>No tiene Exámenes Registradas</p>
                                             @endforelse

@@ -98,7 +98,7 @@ class CreateExamen extends Component
             $descripcionExamen = 'Preguntas de modulo y lección,  preguntas selección múltiples, ' . $preguntasMultiples->count() . 'preguntas de selección simple ' . $preguntasSimples->count();
         }
         $totalPreguntas = $preguntasSimples->merge($preguntasMultiples);
-        //dd($preguntas, $preguntasMultiples, $preguntasSimples);
+        //dd($totalPreguntas, $preguntasMultiples, $preguntasSimples);
         $data = Examen::create([
             'name' => $this->examen,
             'description' => $descripcionExamen,
@@ -107,8 +107,8 @@ class CreateExamen extends Component
             'teacher_id' => auth()->user()->id,
         ]);
 
-
-        $data->questions()->sync($totalPreguntas);
+        $data->questions()->attach($totalPreguntas);
+        //dd($data);
 
         $res = Question::where('asignatura_id', $data->asignatura_id)->groupBy('level')
             ->selectRaw(' level,count(*) as total')

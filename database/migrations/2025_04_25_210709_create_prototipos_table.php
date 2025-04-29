@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('asignatura_id')->nullable();
             $table->unsignedBigInteger('teacher_id')->nullable();
             $table->unsignedBigInteger('question_id')->nullable();
+            $table->text('answer');
             $table->text('question');
             $table->text('option_0');
             $table->text('option_1');

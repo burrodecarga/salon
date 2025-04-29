@@ -14,17 +14,18 @@ return new class extends Migration {
             $table->id();
             $table->text('question');
             $table->text('correct');
-            $table->text('explain')->nullable();
             $table->text('type')->default('multiple');
             $table->text('explain')->nullable();
             $table->string('level')->nullable();
             $table->string('asignatura')->nullable();
             $table->string('modulo')->nullable();
             $table->string('lesson')->nullable();
+            $table->unsignedBigInteger('examen_id')->nullable();
             $table->unsignedBigInteger('asignatura_id')->nullable();
             $table->unsignedBigInteger('modulo_id')->nullable();
             $table->unsignedBigInteger('lesson_id');
-            $table->foreign('lesson_id')->references('id')->on('lessons')->onDelete('cascade')->onUpdate('cascade');
+
+            $table->foreign('examen_id')->references('id')->on('examens')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

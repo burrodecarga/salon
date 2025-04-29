@@ -32,7 +32,7 @@
         </ol>
     </nav>
     <div class="w-full mx-auto bg-gray-300 rounded shadow-lg">
-        @livewire('base.create-question', compact('asignatura'))
+        @livewire('base.create-question', compact('asignatura', 'examen'))
     </div>
     </div>
     </x-app-layout>

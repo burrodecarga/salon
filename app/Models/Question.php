@@ -20,6 +20,7 @@ class Question extends Model
         'lesson_id',
         'modulo_id',
         'asignatura_id',
+        'examen_id',
         'lesson',
         'modulo',
         'asignatura',
@@ -38,6 +39,6 @@ class Question extends Model
 
     public function examens()
     {
-        return $this->belongsToMany(Examen::class)->withTimestamps();
+        return $this->belongsToMany(Examen::class);
     }
 }

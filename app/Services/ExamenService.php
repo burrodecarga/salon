@@ -43,13 +43,14 @@ class ExamenService implements ExamenServiceInterface
         return $questions;
     }
 
-    public function preguntas_por_asignatura($asignatura_id, $teacher_id)
+    public function get_preguntas_por_asignatura($asignatura_id, $teacher_id)
     {
         $examen = Examen::where('asignatura_id', $asignatura_id)
-            ->where('teacher_id', $teacher_id)->where('activo', '1')->get()->first();
+            ->where('teacher_id', $teacher_id)->where('activo', '1')->get();
+        return $examen;
         $preguntas = Pregunta::where('examen_id', $examen->id)->get();
-        //$preguntas = $examen->questions;
-        return $preguntas;
+        $preguntas = $examen->questions;
+        //return $preguntas;
     }
 
     public function get_preguntas_por_block($asignatura_id, $teacher_id)

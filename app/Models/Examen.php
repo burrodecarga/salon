@@ -35,7 +35,7 @@ class Examen extends Model
 
     public function teacher()
     {
-        return $this->belongsTo(User::class, 'teacher_id');
+        return $this->belongsTo(Teacher::class);
     }
 
     public function asignatura()
@@ -44,7 +44,7 @@ class Examen extends Model
     }
     public function questions()
     {
-        return $this->belongsToMany(Question::class)->withTimestamps();
+        return $this->belongsToMany(Question::class);
     }
 
 

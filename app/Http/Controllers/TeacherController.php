@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Block;
 use App\Models\Prototipo;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Teacher;
@@ -154,7 +155,45 @@ class TeacherController extends Controller
 
         }
         flash()->success($message);
-
         return redirect()->route('examenes.index');
+    }
+
+    public function prepare_examen(Examen $examen)
+    {
+        $questions = $examen->questions;//
+        if ($questions->count() == 0) {
+            flash()->error('El Exámen no tiene preguntas, debe EDITAR EXÁMEN y crear preguntas...!');
+            return redirect()->route('examenes.index');
+
+        }
+
+        foreach ($questions as $question) {
+            $opciones = $question->options()->inRandomOrder()->take(5)->get();
+            $array = [];
+            array_push($array, $question->correct);
+            foreach ($opciones as $o) {
+                array_push($array, $o->answer);
+            }
+
+            $array_opt = Arr::shuffle($array);
+            //dd($array_opt);
+
+            $prototipo = Prototipo::create([
+                'examen_id' => $question->examen_id,
+                'asignatura_id' => $question->asignatura_id,
+                'question_id' => $question->question_id,
+                'question' => $question->question,
+                'answer' => $question->correct,
+                'teacher_id' => $examen->teacher_id,
+                'option_0' => $array_opt[0],
+                'option_1' => $array_opt[1],
+                'option_2' => count($array_opt) > 2 ? $array_opt[2] : 'N/A',
+                'option_3' => count($array_opt) > 3 ? $array_opt[3] : 'N/A',
+                'option_4' => count($array_opt) > 4 ? $array_opt[4] : 'N/A',
+            ]);
+
+            flash()->success('Examen Preparado para aplicar');
+            return redirect()->route('examenes.index');
+        }
     }
 }
