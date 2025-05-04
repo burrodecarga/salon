@@ -45,59 +45,59 @@ class CreateExamen extends Component
         $totalMultiples = intval($this->multiples);
         $this->preguntas = $totalSimples + $totalMultiples;
 
-        // if ($totalMultiples < 0) {
-        //     $totalSimles = 0;
-        //     $totalPreguntas = intval($this->preguntas);
-        //     $totalMultiples = $totalPreguntas - $totalSimles;
-        // }
+        // OK dd($this->preguntas, $totalMultiples, $totalSimples);
 
-        //dd($totalPreguntas, $totalMultiples, $totalSimles);
         $asignatura = Asignatura::find($this->selectedAsignatura);
         $asignaturaId = intval($this->selectedAsignatura);
         $query = '';
         if ($this->selectedModulo == 0) {
-            $preguntasMultiples = Question::where('asignatura_id', $asignaturaId)->whereLike('type', '%' . 'multiple' . '%')->take($this->multiples)
+            $preguntasMultiples = Question::where('asignatura_id', $asignaturaId)->whereLike('type', '%' . 'multiple' . '%')->take($totalMultiples)
                 ->inRandomOrder()->get();
-            $preguntasSimples = Question::where('asignatura_id', $asignaturaId)->whereLike('type', '%' . 'simple' . '%')->take($this->simples)
+            $preguntasSimples = Question::where('asignatura_id', $asignaturaId)->whereLike('type', '%' . 'simple' . '%')->take($totalSimples)
                 ->inRandomOrder()->get();
-
-            $descripcionExamen = 'Todos los modulos, ' . 'preguntas selección múltiples, ' . $preguntasMultiples->count() . 'preguntas de selección simple ' . $preguntasSimples->count();
-
+            $query = 'Todos';
 
         } elseif ($this->selectedModulo != 0 && $this->selectedLesson == 0) {
             $preguntasMultiples = Question::where('asignatura_id', $asignaturaId)
                 ->where('modulo_id', $this->selectedModulo)
                 ->whereLike('type', '%' . 'multiple' . '%')
-                ->take($this->multiples)
+                ->take($totalMultiples)
                 ->get();
             $preguntasSimples = Question::where('asignatura_id', $asignaturaId)
                 ->where('modulo_id', $this->selectedModulo)
                 ->whereLike('type', '%' . 'simple' . '%')
-                ->take($this->simples)
+                ->take($totalSimples)
                 ->get();
 
-            $descripcionExamen = 'Preguntas de modulo todas las lecciones,  preguntas selección múltiples, ' . $preguntasMultiples->count() . 'preguntas de selección simple ' . $preguntasSimples->count();
-            //dd('MODULO y TODAS LAS LECCIONES', $preguntasMultiples, $preguntasSimples);
-
+            $query = 'Todos modulos';
 
         } elseif ($this->selectedModulo != 0 && $this->selectedLesson != 0) {
             $preguntasMultiples = Question::where('asignatura_id', $asignaturaId)
                 ->where('modulo_id', $this->selectedModulo)
                 ->where('lesson_id', $this->selectedLesson)
                 ->whereLike('type', '%' . 'multiple' . '%')
-                ->take($this->multiples)
+                ->take($totalMultiples)
                 ->inRandomOrder()->get();
             $preguntasSimples = Question::where('asignatura_id', $asignaturaId)
                 ->where('modulo_id', $this->selectedModulo)
                 ->where('lesson_id', $this->selectedLesson)
                 ->whereLike('type', '%' . 'simple' . '%')
-                ->take($this->simples)
+                ->take($totalSimples)
                 ->inRandomOrder()->get();
-            //dd('MODULO y LECCION', $preguntasMultiples, $preguntasSimples);
 
-            $descripcionExamen = 'Preguntas de modulo y lección,  preguntas selección múltiples, ' . $preguntasMultiples->count() . 'preguntas de selección simple ' . $preguntasSimples->count();
+            $query = 'Modulos y lecciones';
         }
+
+        //dd($query);
         $totalPreguntas = $preguntasSimples->merge($preguntasMultiples);
+
+        if ($preguntasMultiples->count() + $preguntasSimples->count() == 0) {
+            flash()->error('Hay un error en la creación del examen');
+            return redirect()->route('examenes.index');
+
+        }
+        ;
+
         //dd($totalPreguntas, $preguntasMultiples, $preguntasSimples);
         $data = Examen::create([
             'name' => $this->examen,
@@ -108,27 +108,25 @@ class CreateExamen extends Component
         ]);
 
         $data->questions()->attach($totalPreguntas);
-        //dd($data);
+        //dd($totalPreguntas->groupBy('level')->toArray());
 
-        $res = Question::where('asignatura_id', $data->asignatura_id)->groupBy('level')
-            ->selectRaw(' level,count(*) as total')
-            ->get();
-        //dd($res);
-        $str = '';
-        foreach ($res as $r) {
-            $str = $str . $r->total . ' ' . $r->level . ', ';
+        // $str = 'total preguntas' . $totalPreguntas->count() . ' múltiples ' . $preguntasMultiples->count() . ' simples ' . $preguntasSimples->count();
+
+        //dd($str);
+        $level = $totalPreguntas->groupBy('level');
+        $level_str = '';
+        foreach ($level as $key => $l) {
+            $level_str = $level_str . ' ' . $key . ' : ' . $l->count();
         }
 
-        $res1 = Question::where('asignatura_id', $data->asignatura_id)->groupBy('type')
-            ->selectRaw(' type,count(*) as total')
-            ->get();
-        $str1 = '';
-        foreach ($res1 as $r) {
-            $str1 = $str1 . $r->total . ' ' . $r->type . ', ';
+        $type = $totalPreguntas->groupBy('type');
+        $type_str = '';
+        foreach ($type as $key => $l) {
+            $type_str = $type_str . ' ' . $key . ' : ' . $l->count();
         }
-
-        $data->level = $str;
-        $data->type = $str1;
+        //dd($type, $type_str);
+        $data->level = $level_str;
+        $data->type = $type_str;
         $data->save();
 
         return redirect()->route('examenes.index');

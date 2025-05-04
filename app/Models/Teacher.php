@@ -19,7 +19,7 @@ class Teacher extends User
 
     public function asignaturas()
     {
-        return $this->hasMany(Asignatura::class, 'teacher_id');
+        return $this->hasMany(Asignatura::class);
     }
 
     public function examens()
@@ -29,7 +29,7 @@ class Teacher extends User
 
     public function aulas()
     {
-        return $this->hasMany(Aula::class, 'teacher_id');
+        return $this->hasMany(Aula::class);
     }
 
 

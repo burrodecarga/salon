@@ -34,6 +34,13 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now()
         ])->roles()->sync('2');
 
+        User::create([
+            'name' => 'Edwin Henriquez',
+            'rol' => 'student',
+            'email' => 'es@gmail.com',
+            'password' => bcrypt('123'),
+            'email_verified_at' => now()
+        ])->roles()->sync('3');
 
         User::create([
             'name' => 'Edwin Henriquez',
@@ -48,7 +55,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AsignaturaSeeder::class);
         $this->call(ModuloSeeder::class);
         $this->call(LessonSeeder::class);
-        //$this->call(ExamenSeeder::class);
         //$this->call(QuestionSeeder::class);
         //$this->call(OptionSeeder::class);
 
@@ -60,6 +66,7 @@ class DatabaseSeeder extends Seeder
             $a->save();
         }
 
+        $this->call(AulaSeeder::class);
 
 
 

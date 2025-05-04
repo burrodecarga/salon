@@ -164,4 +164,21 @@ class ApiController extends Controller
 
         return $result;
     }
+
+
+    public function set_examen(ExamenService $examenService, Request $request)
+    {
+
+
+        //return response()->json($request->param);
+        $student_id = $request->param->student_id;
+        $teacher_id = $request->param->teacher_id;
+        $preguntas = $request->param->preguntas;
+        $respuestas = $request->param->respuestas;
+
+        $result = $examenService->set_examen($student_id, $teacher_id, $preguntas, $respuestas);
+        return $result;
+
+    }
+
 }

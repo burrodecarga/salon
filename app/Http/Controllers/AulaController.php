@@ -23,9 +23,11 @@ class AulaController extends Controller
         } else {
             $profesor = Teacher::find(auth()->user()->id);
             $aulas = $profesor->aulas()->paginate(9);
+            //$asignaturas = $profesor->asignaturas;
 
         }
 
+        // dd($asignaturas);
         return view('aulas.index', compact('aulas', 'profesor'));
 
     }
@@ -38,6 +40,7 @@ class AulaController extends Controller
         $aula = new Aula();
         $profesor = Teacher::find(auth()->user()->id);
         $asignaturas = $profesor->asignaturas;
+        //dd($asignaturas, $profesor);
         $title = "create aula";
         $btn = "create aula";
         return view('aulas.create', compact('aula', 'profesor', 'title', 'btn', 'asignaturas'));

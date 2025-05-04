@@ -34,65 +34,80 @@ class LessonSeeder extends Seeder
         }
 
         $lessons = Lesson::all();
-        $level=['dificultad baja', 'dificultad baja-media', 'dificultad media', 'dificultad media-baja', 'dificultad alta'];
-        $type =['multiple','simple','multiple','multiple'];
+        $level = ['dificultad baja', 'dificultad baja-media', 'dificultad media', 'dificultad media-baja', 'dificultad alta'];
+        $type = ['multiple', 'simple', 'multiple', 'multiple'];
         foreach ($lessons as $lesson) {
-            $levelN = array_rand(['dificultad baja', 'dificultad baja-media', 'dificultad media', 'dificultad media-baja', 'dificultad alta'],1);
-            $typeN=array_rand(['multiple','simple','multiple','multiple'],1);
+            $levelN = array_rand(['dificultad baja', 'dificultad baja-media', 'dificultad media', 'dificultad media-baja', 'dificultad alta'], 1);
+            $typeN = array_rand(['multiple', 'simple', 'multiple', 'multiple'], 1);
 
 
             Question::create([
-                'question'=>'pregunta '.$lesson->name,
-                'correct'=>'respuesta correcta'.$lesson->name,
-                'explain'=>'explicacion '.$lesson->name,
-                'level'=>$level[$levelN],
-                'type'=>$type[$typeN],
-                'lesson_id'=>$lesson->id,
-                'modulo_id'=>$lesson->modulo_id,
-                'asignatura_id'=>$lesson->asignatura_id,
-                'examen_id'=>null,
-                'lesson'=>$lesson->nane,
-                'modulo'=>$lesson->modulo->name,
-                'asignatura'=>$lesson->modulo->asignatura->name,
+                'question' => 'pregunta ' . $lesson->name,
+                'correct' => 'respuesta correcta  ' . $lesson->name,
+                'explain' => 'explicacion ' . $lesson->name,
+                'level' => $level[$levelN],
+                'type' => $type[$typeN],
+                'lesson_id' => $lesson->id,
+                'modulo_id' => $lesson->modulo_id,
+                'asignatura_id' => $lesson->modulo->asignatura->id,
+                'examen_id' => null,
+                'lesson' => $lesson->name,
+                'modulo' => $lesson->modulo->name,
+                'asignatura' => $lesson->modulo->asignatura->name,
             ]);
         }
 
-        $questions = Question::where('type','multiple')->get();
+        $questions = Question::where('type', 'multiple')->get();
 
-        foreach($questions as $key=>$question){
-            for ($i=0; $i <4 ; $i++) {
+        foreach ($questions as $key => $question) {
+            $option = Option::create([
+                'is_true' => 1,
+                'answer' => $question->correct . ' - ' . $question->id,
+                'question_id' => $question->id
+            ]);
+        }
+
+        foreach ($questions as $key => $question) {
+            for ($i = 0; $i < 4; $i++) {
                 # code...
-                Option::create([
-                    'is_true'=>0,
-                    'answer'=>'respuesta incorrrecta '.$key.' '.$question->name,
-                    'question_id'=>$question->id
+                $option = Option::create([
+                    'is_true' => 0,
+                    'answer' => 'respuesta incorrrecta ' . $key . ' ' . $question->name,
+                    'question_id' => $question->id
                 ]);
+                $option->answer = $option->answer . ' - ' . $option->id;
+                $option->save();
             }
 
-            Option::create([
-                'is_true'=>1,
-                'answer'=>$question->correct,
-                'question_id'=>$question->id
-            ]);
-
+            // $option = Option::create([
+            //     'is_true' => 1,
+            //     'answer' => $question->correct,
+            //     'question_id' => $question->id
+            // ]);
+            // $option->answer = $option->answer . ' - ' . $option->id;
+            // $option->save();
 
         }
-        $questions = Question::where('type','simple')->get();
-        foreach($questions as $key=>$question){
 
-            Option::create([
-                    'is_true'=>0,
-                    'answer'=>'respuesta incorrrecta '.$key.' '.$question->name,
-                    'question_id'=>$question->id
-                ]);
 
-            Option::create([
-                'is_true'=>1,
-                'answer'=>$question->correct,
-                'question_id'=>$question->id
+        $questions = Question::where('type', 'simple')->get();
+
+        foreach ($questions as $key => $question) {
+            $option = Option::create([
+                'is_true' => 0,
+                'answer' => 'respuesta incorrrecta ' . $key . ' ' . $question->name,
+                'question_id' => $question->id
             ]);
+            $option->answer = $option->answer . ' - ' . $option->id;
+            $option->save();
 
-
+            $option = Option::create([
+                'is_true' => 1,
+                'answer' => 'respuesta corrrecta ' . $key . ' ' . $question->name,
+                'question_id' => $question->id
+            ]);
+            $option->answer = $option->answer . ' - ' . $option->id;
+            $option->save();
         }
 
     }

@@ -74,9 +74,13 @@ class ExamenController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    public function destroy(Examen $examen)
+    {
+        //  dd($examen->id);
+        $examen->delete();
+        flash()->error('El Exámen fue eliminado correctamente...!');
+        return redirect()->route('examenes.index');
+    }
     public function add_pregunta(Examen $examen)
     {
         return view('examenes.add_pregunta', compact('examen'));
@@ -101,7 +105,6 @@ class ExamenController extends Controller
                     ->first();
                 if ($pregunta) {
                     $pregunta->update([
-
                         'answer' => $option->answer,
                         'question' => $question->question,
                         'is_true' => $option->is_true,
@@ -123,12 +126,12 @@ class ExamenController extends Controller
                 }
             }
         }
-        if ($examen->activo == 1) {
+        if ($examen->activo == 0) {
             $examen->activo = 0;
             flash()->warning('El Exámen está desactivado...!');
         } else {
-            $examen->activo = 1;
-            flash()->success('El Exámen está activado...!');
+            $examen->activo = 0;
+            flash()->warning('El Exámen estaba activado, se desactivó, preparar exámen...!');
         }
         $examen->save();
         return redirect()->route('examenes.index');

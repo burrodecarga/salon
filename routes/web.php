@@ -61,7 +61,7 @@ Route::middleware(['auth', 'role:teacher|super-admin'])->group(function () {
     Route::get('/teachers/examenes/movil/{examen}', [TeacherController::class, 'movil'])->name('teachers.movil');
     Route::get('/teachers/examenes/prepare_examen/{examen}', [TeacherController::class, 'prepare_examen'])->name('teachers.prepare_examen');
 
-    Route::resource('/examenes', ExamenController::class)->names('examenes');
+    Route::resource('/examens', ExamenController::class)->names('examenes');
     Route::get('/examenes/activar/{examen}', [ExamenController::class, 'activar'])->name('examenes.activar');
     Route::get('/examenes/add_pregunta/{examen}', [ExamenController::class, 'add_pregunta'])->name('examenes.add_pregunta');
 

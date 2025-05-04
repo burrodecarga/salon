@@ -15,6 +15,9 @@ class Prototipo extends Model
         'asignatura_id',
         'teacher_id',
         'question_id',
+        'option_id',
+        'true',
+        'selected',
         'question',
         'answer',
         'option_0',
@@ -22,6 +25,11 @@ class Prototipo extends Model
         'option_2',
         'option_3',
         'option_4',
+        'option_0_value',
+        'option_1_value',
+        'option_2_value',
+        'option_3_value',
+        'option_4_value',
     ];
 
 

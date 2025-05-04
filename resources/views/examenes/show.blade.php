@@ -24,7 +24,6 @@
         </article>
     @endforeach
     @if ($questions->count() > 0)
-        <p>XXXXX</p>
         <div>
             {{ $questions->links() }}
         </div>

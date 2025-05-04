@@ -43,7 +43,7 @@
                                             {{ $examen->type }}
                                         </td>
                                         <td width="" class="text-wrap">
-                                            {{ $examen->level }} Preguntas : {{ $examen->questions->count() }}
+                                            {{ $examen->level }}
                                         </td>
                                         <td width="100%" class="flex gap-10 items-center flex-wrap">
                                             @if ($examen->questions->count() > 0)
@@ -66,7 +66,7 @@
                                                     class="{{ $examen->activo == 1 ? 'text-green-500' : 'text-red-500' }} rounded-full " />
                                             </a>
 
-                                            <form action="{{ route('examenes.destroy', $examen) }}" method="POST"
+                                            <form action="{{ route('examenes.destroy', $examen->id) }}" method="POST"
                                                 class="text-red-600 items-center text-justify h-full"
                                                 title="eliminar exámen">
                                                 @csrf
