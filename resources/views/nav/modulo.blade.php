@@ -4,7 +4,7 @@
             fill="none" viewBox="0 0 6 10">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
         </svg>
-        <a href="{{ route('lessons.index', [$asignatura, $modulo]) }}"
-            class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">Lección</a>
+        <a href="{{ route('modulos.show', [$asignatura, $modulo]) }}"
+            class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">{{ $modulo->name }}</a>
     </div>
 </li>

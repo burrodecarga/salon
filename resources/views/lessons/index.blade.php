@@ -64,21 +64,23 @@
                                     </td>
                                     <td
                                         class="flex-col  gap-3 flex h-['100%'] justify-between  justify-items-centertext-center mx-auto w-full flex-1">
-                                        <a href="#" class="text-green-600 mx-auto flex-1" title="Crear Modulo">
-                                            <flux:icon.clipboard-document-list />
-                                        </a>
-                                        <a href="#" class="text-green-600 mx-auto flex-1" title="Crear exámen">
+
+                                        <a href="{{ route('questions.create_pregunta', [$asignatura, $modulo, $lesson]) }}"
+                                            class="text-green-600 mx-auto flex-1" title="Crear Pregunta">
                                             <flux:icon.clipboard-document-check />
                                         </a>
-                                        <a title="Modificar lesson" href="#" class="mx-auto">
+                                        <a title="Modificar lesson"
+                                            href="{{ route('lessons.edit', [$asignatura, $modulo, $lesson]) }}"
+                                            class="mx-auto">
                                             <flux:icon.pencil-square />
                                         </a>
 
-                                        <form action="" method="POST" class="text-red-600">
+                                        <form action="{{ route('asignaturas.lesson.eliminar', $lesson->id) }}"
+                                            method="POST" class="text-red-600">
                                             @csrf
-                                            @method('DELETE')
+                                            @method('POST')
                                             <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
-                                            <button type="submit">
+                                            <button type="submit" title="Eliminar Leccion">
                                                 <flux:icon.trash />
                                             </button>
 

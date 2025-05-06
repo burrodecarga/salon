@@ -1,4 +1,5 @@
 <div class="bg-gray-100 px-6 py-1 my-0 border rounded">
+    <h1 class="mx-auto text-2xl text-center px-4 py-2">Crear Pregunta</h1>
     <form wire:submit="save" class="bg-slate-100 w-full mx-auto p-0 my-6 rounded">
         <div class="grid grid-cols-2 p-0 bg-slate-100 rounded gap-1 justify-between items-center">
             <div class="mb-0 bg-white px-10 py-1 rounded">

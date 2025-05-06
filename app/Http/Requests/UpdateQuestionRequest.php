@@ -11,7 +11,7 @@ class UpdateQuestionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user()->hasRole('teacher');
     }
 
     /**
@@ -21,8 +21,11 @@ class UpdateQuestionRequest extends FormRequest
      */
     public function rules(): array
     {
+        //dd($this->request->all());
         return [
-            //
+            'question' => 'required',
+            'lesson_id' => 'required|numeric',
+            'level' => 'required' //
         ];
     }
 }

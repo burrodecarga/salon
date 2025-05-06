@@ -1,4 +1,14 @@
 <x-layouts.app :title="__('Modulo')">
+    <nav class="flex" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+            @include('nav.inicio')
+            @include('nav.asignaturas')
+            @include('nav.asignatura')
+            @include('nav.modulo')
+
+        </ol>
+    </nav>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
 
@@ -19,6 +29,18 @@
             <div class="card mx-auto w-full md:w-full text-center">
                 <div class="card-header bg-primary text-white">
                     <div class="card-title flex justify-between items-center  text-center">
+                        @role('teacher')
+                            <form action="{{ route('asignaturas.modulo.destroy', [$modulo]) }}" method="POST"
+                                class="text-white">
+                                @csrf
+                                @method('POST')
+                                <input type="hidden" name="modulo_id" value="{{ $modulo->id }}">
+                                <button type="submit" title="Eliminar Módulo">
+                                    <flux:icon.trash />
+                                </button>
+
+                            </form>
+                        @endrole
                         <h4 class="m-auto">
                             {{ __('list of lessons') }}
                         </h4>
@@ -60,21 +82,23 @@
 
                                     <td
                                         class="flex-col  gap-3 flex h-['100%'] justify-between  justify-items-centertext-center mx-auto w-full flex-1">
-                                        <a href="#" class="text-green-600 mx-auto flex-1" title="Crear Modulo">
-                                            <flux:icon.clipboard-document-list />
-                                        </a>
-                                        <a href="#" class="text-green-600 mx-auto flex-1" title="Crear exámen">
+
+                                        <a href="{{ route('questions.create', [$asignatura, $modulo, $lesson]) }}"
+                                            class="text-green-600 mx-auto flex-1" title="Crear pregunta">
                                             <flux:icon.clipboard-document-check />
                                         </a>
-                                        <a title="Modificar lesson" href="#" class="mx-auto">
+                                        <a title="Modificar Lección"
+                                            href="{{ route('lessons.edit', [$asignatura, $modulo, $lesson]) }}"
+                                            class="mx-auto">
                                             <flux:icon.pencil-square />
                                         </a>
 
-                                        <form action="" method="POST" class="text-red-600">
+                                        <form action="{{ route('asignaturas.lesson.eliminar', $lesson) }}"
+                                            method="POST" class="text-red-600">
                                             @csrf
-                                            @method('DELETE')
+                                            @method('POST')
                                             <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
-                                            <button type="submit">
+                                            <button type="submit" title="Eliminar leccion">
                                                 <flux:icon.trash />
                                             </button>
 

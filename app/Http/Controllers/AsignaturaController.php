@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Lesson;
 use App\Models\Modulo;
+use App\Models\Question;
 use App\Models\Teacher;
 use App\Models\Asignatura;
 use App\Http\Requests\UpdateAsignaturaRequest;
 use App\Http\Requests\StoreAsignaturaRequest;
+use Illuminate\Http\Request;
 
 class AsignaturaController extends Controller
 {
@@ -120,17 +122,68 @@ class AsignaturaController extends Controller
     public function modulo(Modulo $modulo)
     {
         $lessons = $modulo->lessons;
-        return view('asignaturas.modulo', compact('modulo', 'lessons'));
+        $asignatura = $modulo->asignatura;
+        return view('asignaturas.modulo', compact('asignatura', 'modulo', 'lessons'));
     }
 
 
     public function leccion(Modulo $modulo, Lesson $lesson)
     {
-
         $questions = $lesson->questions;
+        $asignatura = $modulo->asignatura;
         // dd($modulo, $lesson, $questions);
-        return view('asignaturas.lesson', compact('modulo', 'lesson', 'questions'));
+        return view('asignaturas.lesson', compact('asignatura', 'modulo', 'lesson', 'questions'));
     }
+
+    public function modulo_destroy(Modulo $modulo)
+    {
+        $modulo->delete();
+        flash()->success('Módulo eliminado correctamente!');
+        return redirect()->route('asignaturas.index');
+    }
+
+    public function lesson_destroy(Lesson $lesson)
+    {
+        $lesson->delete();
+        flash()->success('Lección eliminada correctamente!');
+        return redirect()->route('asignaturas.index');
+    }
+
+    public function question_modify(Question $question)
+    {
+        $lesson = $question->lesson()->first();
+        //dd($question);
+        $modulo = $lesson->modulo;
+        $asignatura = $modulo->asignatura;
+        // dd($modulo, $lesson, $questions);
+        return view('asignaturas.question_modify', compact('asignatura', 'modulo', 'lesson', 'question'));
+    }
+
+    public function question_actualiza(Request $request, Question $question)
+    {
+        //dd($request->all());
+        $lesson = $question->lesson()->first();
+        $question->update([
+            'level' => $request->level,
+            'type' => $request->type,
+            'question' => $request->question,
+            'correct' => $request->correct,
+            'explain' => $request->explain,
+        ]);
+
+        $d = $question->options()->where('is_true', 1)->delete();
+        $question->options()->create([
+            'is_true' => 1,
+            'answer' => $question->correct,
+        ]);
+
+        flash()->success('Pregunta Modificada correctamente!');
+        //return redirect()->back();
+        return redirect()->route('asignaturas.leccion', [$lesson->modulo_id, $lesson->id]);
+
+
+    }
+
 
 
 }

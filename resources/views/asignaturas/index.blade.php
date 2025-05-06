@@ -52,24 +52,23 @@
                                         {{ $asignatura->name }}<br>
                                     </td>
                                     <td>
-                                        Módulos: {{ $asignatura->modulos->count() }}
                                         <div>
                                             @forelse ($asignatura->modulos as $modulo)
                                                 <a href="{{ route('asignaturas.modulo', [$modulo->id]) }}">
-                                                    <p class="my-0.5 text-[10px]">{{ $modulo->name }}</p>
+                                                    <p class="my-0.5 text-[12px]">{{ $modulo->name }}</p>
                                                 </a>
                                             @empty
                                                 <p>NO Tiene Módulos registrados</p>
                                             @endforelse
                                         </div>
                                     </td>
-                                    <td width="">Lecciones: {{ $asignatura->lessons->count() }} <br>
+                                    <td width="">
                                         <div>
                                             @forelse ($asignatura->lessons as $lesson)
                                                 <a
                                                     href="{{ route('asignaturas.leccion', [$lesson->modulo_id, $lesson->id]) }}">
 
-                                                    <p class="my-0.5 text-[10px]">{{ $lesson->name }}</p>
+                                                    <p class="my-0.5 text-[12px]">{{ $lesson->name }}</p>
                                                 </a>
                                             @empty
                                                 <p>No tiene lecciones Registradas</p>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Option;
 use App\Http\Requests\StoreOptionRequest;
 use App\Http\Requests\UpdateOptionRequest;
+use Illuminate\Http\Request;
 
 class OptionController extends Controller
 {
@@ -95,6 +96,44 @@ class OptionController extends Controller
         $option->is_true = 1;
         $option->save();
         return redirect()->route('base.opciones', [$modulo, $lesson, $question]);
+    }
+
+
+
+    public function modify(Option $option)
+    {
+
+        $title = "edit option";
+        $btn = "edit option";
+        $question = $option->question;
+        $lesson = $question->lesson()->first();
+        $modulo = $lesson->modulo;
+        $asignatura = $modulo->asignatura;
+        //dd($lesson, $modulo);
+        return view('options.modify', compact('option', 'title', 'btn', 'lesson', 'modulo', 'asignatura'));
+    }
+
+    public function actualiza(Request $request, Option $option)
+    {
+
+        $validated = $request->validate([
+            'answer' => 'required',
+        ]);
+        $option->update([
+            'answer' => $request->input('answer'),
+        ]);
+
+        $option->save();
+        $question = $option->question;
+        $lesson = $question->lesson()->first();
+
+        //dd($lesson);
+        $modulo_id = $lesson->modulo_id;
+
+        flash()->success('Pregunta Modificada correctamente!');
+        //return redirect()->back();
+        return redirect()->route('asignaturas.leccion', [$modulo_id, $lesson->id]);
+
     }
 
 

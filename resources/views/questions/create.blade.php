@@ -1,12 +1,8 @@
-@livewire('questions.question-create', compact('asignatura', 'modulo', 'lesson'));
-
-{{-- <x-layouts.app :title="__('Crear lección a módulo')">
+<x-layouts.app :title="__('Crear pregunta a lección')">
     <nav class="flex" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
             @include('nav.inicio')
-            @include('nav.asignaturas')
             @include('nav.asignatura')
-            @include('nav.modulos')
 
             <li aria-current="page">
                 <div class="flex items-center">
@@ -38,12 +34,18 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="m1 9 4-4-4-4" />
                     </svg>
-                    <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">Crear Lección</span>
+                    <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">Crear
+                        Pregunta</span>
                 </div>
             </li>
 
         </ol>
     </nav>
+    @livewire('questions.question-create', compact('asignatura', 'modulo', 'lesson'));
+</x-layouts.app>
+
+{{--
+
     <div class="w-full mx-auto bg-gray-300 rounded shadow-lg">
         <div class="w-full p-6 mx-auto my-10">
             <h1 class="text-2xl font-bold capitalize"><strong>{{ __($title) }}</strong></h1>

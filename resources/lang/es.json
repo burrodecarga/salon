@@ -63,5 +63,8 @@
     "type of answer": "tipo de pregunta",
     "level of answer": "nivel de dificultad",
     "asignatura edit": "modificar asignatura",
-    "list of lessons": "listado de lecciones"
+    "list of lessons": "listado de lecciones",
+    "question of lesson": "pregunta de la lección",
+    "answer of question": "respuesta a pregunta",
+    "explain": "explicación"
 }

@@ -29,7 +29,12 @@ Route::middleware(['auth', 'role:teacher|super-admin'])->group(function () {
     Route::get('/listado/asignaturas', [AsignaturaController::class, 'listado'])->name('listado');
 
     Route::get('/asignaturas/modulo/{modulo}', [AsignaturaController::class, 'modulo'])->name('asignaturas.modulo');
+    Route::post('/asignaturas/modulo/{modulo}/eliminar', [AsignaturaController::class, 'modulo_destroy'])->name('asignaturas.modulo.destroy');
+    Route::post('/asignaturas/lesson/eliminar/{lesson}', [AsignaturaController::class, 'lesson_destroy'])->name('asignaturas.lesson.eliminar');
+
     Route::get('/asignaturas/modulo/{modulo}/leccion/{lesson}', [AsignaturaController::class, 'leccion'])->name('asignaturas.leccion');
+    Route::get('/asignaturas/leccion/question/{question}', [AsignaturaController::class, 'question_modify'])->name('asignaturas.question.modify');
+    Route::post('/asignaturas/modifica/leccion/question/{question}', [AsignaturaController::class, 'question_actualiza'])->name('asignaturas.question.actualiza');
 
 
     Route::resource('asignatura/{asignatura}/modulos', ModuloController::class)->names('modulos');
@@ -40,6 +45,8 @@ Route::middleware(['auth', 'role:teacher|super-admin'])->group(function () {
     Route::get('asignatura/questions/{examen}', [QuestionController::class, 'create_pregunta'])->name('questions.create_pregunta');
 
     Route::resource('/options', OptionController::class)->names('options');
+    Route::get('/options/modify/{option}', [OptionController::class, 'modify'])->name('options.modify');
+    Route::post('/options/actualiza/{option}', [OptionController::class, 'actualiza'])->name('options.actualiza');
     Route::get('/modificar/options/{option}', [OptionController::class, 'modificar'])->name('modificar');
 
     Route::get('/modulos/{modulo}/lessons/{lesson}', [BaseController::class, 'index'])->name('base.index');

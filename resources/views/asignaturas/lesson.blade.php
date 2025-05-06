@@ -1,7 +1,20 @@
 <x-layouts.app :title="__('Modulo')">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
 
+
+    <nav class="flex" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+            {{-- @include('nav.inicio')
+            @include('nav.asignaturas')
+            @include('nav.asignatura')
+            @include('nav.modulos')
+            @include('nav.modulo')
+            @include('nav.lecciones')
+            @include('nav.leccion') --}}
+        </ol>
+    </nav>
 
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
         <h6
@@ -20,6 +33,18 @@
             <div class="card mx-auto w-full md:w-full text-center">
                 <div class="card-header bg-primary text-white">
                     <div class="card-title flex justify-between items-center  text-center">
+                        @role('teacher')
+                            <form action="{{ route('asignaturas.lesson.eliminar', $lesson) }}" method="POST"
+                                class="text-white">
+                                @csrf
+                                @method('POST')
+                                <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
+                                <button type="submit" title="Eliminar leccion">
+                                    <flux:icon.trash />
+                                </button>
+
+                            </form>
+                        @endrole
                         <h4 class="m-auto">
                             {{ __('list of questions') }}
                         </h4>
@@ -56,31 +81,35 @@
                                     </td>
                                     <td width="">
                                         @forelse ($question->options as $option)
-                                            <p>{{ $option->answer }}</p>
+                                            @if ($option->is_true)
+                                                <p>{{ $option->answer }}</p>
+                                            @else
+                                                <a href="{{ route('options.modify', $option) }}">
+                                                    <p>{{ $option->answer }}</p>
+                                                </a>
+                                            @endif
                                         @empty
                                         @endforelse
 
                                     <td
                                         class="flex-col  gap-3 flex h-['100%'] justify-between  justify-items-centertext-center mx-auto w-full flex-1">
-                                        <a href="#" class="text-green-600 mx-auto flex-1" title="Crear Modulo">
-                                            <flux:icon.clipboard-document-list />
-                                        </a>
-                                        <a href="#" class="text-green-600 mx-auto flex-1" title="Crear exámen">
-                                            <flux:icon.clipboard-document-check />
-                                        </a>
-                                        <a title="Modificar question" href="#" class="mx-auto">
+
+                                        <a title="Modificar question"
+                                            href="{{ route('asignaturas.question.modify', [$question]) }}"
+                                            class="mx-auto">
                                             <flux:icon.pencil-square />
                                         </a>
-
-                                        <form action="" method="POST" class="text-red-600">
+                                        <form action="{{ route('asignaturas.lesson.eliminar', $lesson) }}"
+                                            method="POST" class="text-red-600">
                                             @csrf
-                                            @method('DELETE')
-                                            <input type="hidden" name="question_id" value="{{ $question->id }}">
-                                            <button type="submit">
+                                            @method('POST')
+                                            <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
+                                            <button type="submit" title="Eliminar leccion">
                                                 <flux:icon.trash />
                                             </button>
 
                                         </form>
+
                                     </td>
                                 </tr>
                             @endforeach
