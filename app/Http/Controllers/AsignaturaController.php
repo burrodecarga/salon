@@ -101,7 +101,10 @@ class AsignaturaController extends Controller
      */
     public function destroy(Asignatura $asignatura)
     {
-        //
+        $asignatura->delete();
+        flash()->success('Asignatura eliminada correctamente!');
+        return redirect()->route('asignaturas.index');
+
     }
 
     public function listado()
@@ -111,6 +114,22 @@ class AsignaturaController extends Controller
         $asignaturas = $profesor->asignaturas;
 
         return view('asignaturas.listado', compact('asignaturas'));
+    }
+
+
+    public function modulo(Modulo $modulo)
+    {
+        $lessons = $modulo->lessons;
+        return view('asignaturas.modulo', compact('modulo', 'lessons'));
+    }
+
+
+    public function leccion(Modulo $modulo, Lesson $lesson)
+    {
+
+        $questions = $lesson->questions;
+        // dd($modulo, $lesson, $questions);
+        return view('asignaturas.lesson', compact('modulo', 'lesson', 'questions'));
     }
 
 

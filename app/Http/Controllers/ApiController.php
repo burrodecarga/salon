@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Nota;
 use App\Models\Question;
 use App\Services\ExamenService;
 use Illuminate\Support\Facades\Validator;
@@ -23,15 +24,19 @@ class ApiController extends Controller
     {
         $fields = $request->validate([
             'name' => 'required|string',
+            'last_name' => 'required|string',
+            'cedula' => 'required',
+            'phone' => 'required',
             'email' => 'required|email|string|unique:users,id',
-            'password' => 'required|confirmed'
+            'password' => 'required'
         ]);
 
         $user = User::create($fields);
-        $token = $user->createToken($request->name)->plainTextToken;
-
-
-        return ['user' => $user, 'token' => $token];
+        $user->roles()->sync('3');
+        //$token = $user->createToken($request->name)->plainTextToken;
+        return response()->json([
+            'user' => ['id' => $user->id, 'name' => $user->name, 'email' => $user->email],
+        ], 200);
     }
 
     public function login(Request $request)
@@ -106,7 +111,7 @@ class ApiController extends Controller
     public function get_preguntas_por_examen(ExamenService $examenService, Request $request)
     {
 
-        return response()->json(["a" => $request->input('examen_id')]);
+        //return response()->json(["a" => $request->input('examen_id')]);
         $result = $examenService->get_preguntas_por_examen($request->input('examen_id'));
 
         return $result;
@@ -168,16 +173,8 @@ class ApiController extends Controller
 
     public function set_examen(ExamenService $examenService, Request $request)
     {
-
-
-        //return response()->json($request->param);
-        $student_id = $request->param->student_id;
-        $teacher_id = $request->param->teacher_id;
-        $preguntas = $request->param->preguntas;
-        $respuestas = $request->param->respuestas;
-
-        $result = $examenService->set_examen($student_id, $teacher_id, $preguntas, $respuestas);
-        return $result;
+        $result = $examenService->parametro($request->param['preguntas'], $request->param['respuestas'], $request->param['examen_id'], $request->param['student_id']);
+        //return $result;
 
     }
 

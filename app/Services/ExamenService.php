@@ -4,8 +4,10 @@ namespace App\Services;
 
 use App\Interfaces\ExamenServiceInterface;
 use App\Models\Examen;
+use App\Models\Nota;
 use App\Models\Pregunta;
 use App\Models\Prototipo;
+use PhpParser\JsonDecoder;
 
 
 
@@ -22,26 +24,6 @@ class ExamenService implements ExamenServiceInterface
     {
         $examen = Examen::find($examen_id);
         return $examen;
-        // //$questions = $examen->questions()->inRandomOrder()->get();
-
-        // foreach ($questions as $question) {
-        //     foreach ($question->options as $option) {
-        //         Pregunta::updateOrCreate([
-        //             'examen_id' => $examen->id,
-        //             'asignatura_id' => $examen->asignatura_id,
-        //             'teacher_id' => $examen->teacher_id,
-        //             'question_id' => $option->question_id,
-        //             'option_id' => $option->id,
-        //         ], [
-        //             'question' => $option->question,
-        //             'answer' => $option->answer,
-        //         ]);
-        //     }
-        // }
-
-        //$questions = Pregunta::where('examen_id', $examen_id)->get();
-
-        //return $examen;
     }
 
     public function get_preguntas_por_asignatura($asignatura_id, $teacher_id)
@@ -98,9 +80,32 @@ WHERE (`questions`.`level` ='dificultad media'
     AND `questions`.`type` ='multiple');";
     }
 
-    function set_examen($student_id, $teacher_id, $preguntas, $respuestas)
+    function set_examen($examen_id, $student_id, $preguntas, $respuestas)
     {
 
+        $nota = Nota::create([
+            'examen_id' => $examen_id,
+            'student_id' => $student_id,
+            'preguntas' => json_encode($preguntas),
+            'respuestas' => "json_encode($respuestas)"
+        ]);
+
+        return response()->json(['a' => $student_id, 'b' => $examen_id, $preguntas, 'd' => $respuestas]);
+
+    }
+
+    function parametro($a, $b, $c, $d)
+    {
+        $nota = Nota::create(
+            [
+                'examen_id' => $c,
+                'student_id' => $d,
+                'preguntas' => json_encode($a),
+                'respuestas' => json_encode($b),
+            ]
+        );
+
+        return response()->json(['a' => $a, 'b' => gettype($b)]);
     }
 
 }

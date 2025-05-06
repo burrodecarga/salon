@@ -1,4 +1,6 @@
-<x-layouts.app :title="__('Crear lección a módulo')">
+@livewire('questions.question-create', compact('asignatura', 'modulo', 'lesson'));
+
+{{-- <x-layouts.app :title="__('Crear lección a módulo')">
     <nav class="flex" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
             @include('nav.inicio')
@@ -52,4 +54,4 @@
             </form>
         </div>
     </div>
-    </x-app-layout>
+    </x-app-layout> --}}

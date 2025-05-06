@@ -28,6 +28,9 @@ Route::middleware(['auth', 'role:teacher|super-admin'])->group(function () {
 
     Route::get('/listado/asignaturas', [AsignaturaController::class, 'listado'])->name('listado');
 
+    Route::get('/asignaturas/modulo/{modulo}', [AsignaturaController::class, 'modulo'])->name('asignaturas.modulo');
+    Route::get('/asignaturas/modulo/{modulo}/leccion/{lesson}', [AsignaturaController::class, 'leccion'])->name('asignaturas.leccion');
+
 
     Route::resource('asignatura/{asignatura}/modulos', ModuloController::class)->names('modulos');
 

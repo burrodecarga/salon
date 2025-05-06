@@ -50,13 +50,14 @@
                                 <tr>
                                     <td width="">
                                         {{ $asignatura->name }}<br>
-                                        {{ $asignatura->teacher->aulas }}
                                     </td>
                                     <td>
                                         Módulos: {{ $asignatura->modulos->count() }}
                                         <div>
                                             @forelse ($asignatura->modulos as $modulo)
-                                                <p class="my-0.5 text-[10px]">{{ $modulo->name }}</p>
+                                                <a href="{{ route('asignaturas.modulo', [$modulo->id]) }}">
+                                                    <p class="my-0.5 text-[10px]">{{ $modulo->name }}</p>
+                                                </a>
                                             @empty
                                                 <p>NO Tiene Módulos registrados</p>
                                             @endforelse
@@ -65,7 +66,11 @@
                                     <td width="">Lecciones: {{ $asignatura->lessons->count() }} <br>
                                         <div>
                                             @forelse ($asignatura->lessons as $lesson)
-                                                <p class="my-0.5 text-[10px]">{{ $lesson->name }}</p>
+                                                <a
+                                                    href="{{ route('asignaturas.leccion', [$lesson->modulo_id, $lesson->id]) }}">
+
+                                                    <p class="my-0.5 text-[10px]">{{ $lesson->name }}</p>
+                                                </a>
                                             @empty
                                                 <p>No tiene lecciones Registradas</p>
                                             @endforelse
@@ -104,17 +109,17 @@
                                     </td>
                                     <td
                                         class="flex-col  gap-3 flex h-['100%'] justify-between  justify-items-centertext-center mx-auto w-full flex-1">
+                                        <a href="{{ route('modulos.create', $asignatura->id) }}"
+                                            class="text-green-600 mx-auto flex-1" title="Crear Modulo">
+                                            <flux:icon.clipboard-document-list />
+                                        </a>
                                         <a href="{{ route('examenes.create') }}" class="text-green-600 mx-auto flex-1"
                                             title="Crear exámen">
-
                                             <flux:icon.clipboard-document-check />
                                         </a>
-                                        <a href="{{ route('asignaturas.edit', $asignatura) }}" class="mx-auto">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                            </svg>
+                                        <a title="Modificar Asignatura"
+                                            href="{{ route('asignaturas.edit', $asignatura) }}" class="mx-auto">
+                                            <flux:icon.pencil-square />
                                         </a>
 
                                         <form action="{{ route('asignaturas.destroy', $asignatura->id) }}"
@@ -123,12 +128,7 @@
                                             @method('DELETE')
                                             <input type="hidden" name="asignatura_id" value="{{ $asignatura->id }}">
                                             <button type="submit">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                                    viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2"
-                                                        d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
-                                                </svg>
+                                                <flux:icon.trash />
                                             </button>
 
                                         </form>

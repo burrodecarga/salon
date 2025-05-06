@@ -26,10 +26,10 @@ class QuestionController extends Controller
      */
     public function create(Asignatura $asignatura, Modulo $modulo, Lesson $lesson)
     {
-        // $question = new Question();
-        // $title="create question";
-        // $btn="create question";
-        // return view('questions.create',compact('asignatura','modulo','lesson','question','title','btn'));
+        $question = new Question();
+        $title = "create question";
+        $btn = "create question";
+        return view('questions.create', compact('asignatura', 'modulo', 'lesson', 'question', 'title', 'btn'));
     }
 
     /**

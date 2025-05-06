@@ -1,14 +1,4 @@
-<x-layouts.app :title="__('lecciones del modulo')">
-    <nav class="flex" aria-label="Breadcrumb">
-        <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
-            @include('nav.inicio')
-            @include('nav.asignaturas')
-            @include('nav.asignatura')
-            @include('nav.modulos')
-            @include('nav.leccion')
-        </ol>
-    </nav>
-
+<x-layouts.app :title="__('Modulo')">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
 
@@ -20,10 +10,10 @@
         </h2>
 
         {{-- @role('teacher')
-                <div class="px-4 py-2 w-full bg-gray-300 rounded">
-                    <a href="{{ route('lessons.create') }}">Crear lesson</a>
-                </div>
-            @endrole --}}
+            <div class="px-4 py-2 w-full bg-gray-300 rounded">
+                <a href="{{ route('lessons.create') }}">Crear lesson</a>
+            </div>
+        @endrole --}}
 
         <div class="container mt-10">
             <div class="card mx-auto w-full md:w-full text-center">
@@ -41,12 +31,13 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <table id="lesson" class="table table-hover text-[14px]" style="width:100%">
+                    <table id="asignatura" class="table table-hover text-[14px]" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Lección</th>
                                 <th>Descripción</th>
                                 <th>Preguntas</th>
+                                <th>Exámenes</th>
                                 <th>acciones</th>
                             </tr>
                         </thead>
@@ -60,8 +51,13 @@
                                         <p>{{ $lesson->description }}</p>
                                     </td>
                                     <td width="">Preguntas: {{ $lesson->questions->count() }} <br>
+                                        <div>
 
+                                        </div>
                                     </td>
+                                    <td width="">
+
+
                                     <td
                                         class="flex-col  gap-3 flex h-['100%'] justify-between  justify-items-centertext-center mx-auto w-full flex-1">
                                         <a href="#" class="text-green-600 mx-auto flex-1" title="Crear Modulo">
@@ -103,7 +99,7 @@
                 $(document).ready(function() {
                     $('#lesson').DataTable({
                         "columnDefs": [{
-                            "targets": [3],
+                            "targets": [4],
                             "orderable": false
                         }]
 
@@ -118,41 +114,41 @@
 
 
         {{-- <div class="grid auto-rows-min gap-4 md:grid-cols-2">
-                @foreach ($lessons as $lesson)
-                    <div class="px-6 py-2 bg-gray-300 border border-gray-400 rounded">
+            @foreach ($lessons as $lesson)
+                <div class="px-6 py-2 bg-gray-300 border border-gray-400 rounded">
 
-                        <h2
-                            class="uppercase text-center font-bold m-auto text-xl text-gray-700 text-wrap justify-center items-center p-4">
-                            {{ $lesson->name }}
-                        </h2>
+                    <h2
+                        class="uppercase text-center font-bold m-auto text-xl text-gray-700 text-wrap justify-center items-center p-4">
+                        {{ $lesson->name }}
+                    </h2>
 
-                        <div class="flex justify-between">
-                            @role('teacher')
-                                <a href="{{ route('lessons.show', $lesson) }}"
-                                    class="cursor-pointer px-4 py-2 bg-gray-300 border border-white  z-99 rounded">
-                                    Ver Detalles
-                                </a>
-                            @endrole
-                            @role('teacher')
-                                <a href="{{ route('lessons.edit', $lesson) }}"
-                                    class="cursor-pointer px-4 py-2 bg-gray-300 border border-white  z-99 rounded">
-                                    Editar lesson
-                                </a>
-                            @endrole
+                    <div class="flex justify-between">
+                        @role('teacher')
+                            <a href="{{ route('lessons.show', $lesson) }}"
+                                class="cursor-pointer px-4 py-2 bg-gray-300 border border-white  z-99 rounded">
+                                Ver Detalles
+                            </a>
+                        @endrole
+                        @role('teacher')
+                            <a href="{{ route('lessons.edit', $lesson) }}"
+                                class="cursor-pointer px-4 py-2 bg-gray-300 border border-white  z-99 rounded">
+                                Editar lesson
+                            </a>
+                        @endrole
 
-                            @role('teacher')
-                                <a href="{{ route('modulos.index', $lesson) }}"
-                                    class="cursor-pointer px-4 py-2 bg-gray-300 border border-white  z-99 rounded">
-                                    Ver Módulos
-                                </a>
-                            @endrole
-                        </div>
-
+                        @role('teacher')
+                            <a href="{{ route('modulos.index', $lesson) }}"
+                                class="cursor-pointer px-4 py-2 bg-gray-300 border border-white  z-99 rounded">
+                                Ver Módulos
+                            </a>
+                        @endrole
                     </div>
-                @endforeach
-            </div>
-            @if ($lessons->count() > 0)
-                {{ $lessons->links() }}
-            @endif --}}
+
+                </div>
+            @endforeach
+        </div>
+        @if ($lessons->count() > 0)
+            {{ $lessons->links() }}
+        @endif --}}
     </div>
 </x-layouts.app>
