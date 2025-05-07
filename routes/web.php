@@ -76,6 +76,8 @@ Route::middleware(['auth', 'role:teacher|super-admin'])->group(function () {
     Route::get('/examenes/add_pregunta/{examen}', [ExamenController::class, 'add_pregunta'])->name('examenes.add_pregunta');
 
     Route::resource('/aulas', AulaController::class)->names('aulas');
+    Route::get('/aulas/{aula}/add_students', [AulaController::class, 'add_students'])->name('aulas.add_students');
+
     Route::get('/teachers/{student}/inscribir', [TeacherController::class, 'inscribir'])->name('teachers.inscribir');
     Route::redirect('settings', 'settings/profile');
 

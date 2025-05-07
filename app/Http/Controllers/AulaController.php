@@ -38,6 +38,8 @@ class AulaController extends Controller
     public function create()
     {
         $aula = new Aula();
+        $aula->inicio = now();
+        $aula->fin = now();
         $profesor = Teacher::find(auth()->user()->id);
         $asignaturas = $profesor->asignaturas;
         //dd($asignaturas, $profesor);
@@ -53,8 +55,7 @@ class AulaController extends Controller
     public function store(StoreAulaRequest $request)
     {
 
-        $asignatura = Asignatura::find($request->input('asignatura'));
-
+        $asignatura = Asignatura::find($request->input('asignatura_id'));
         //dd($request->input('inicio'));
         $date = $request->input('inicio');
         //dd($date);
@@ -85,7 +86,9 @@ class AulaController extends Controller
      */
     public function show(Aula $aula)
     {
-        //
+        $teacher = $aula->teacher;
+        $students = $aula->students;
+        return view('aulas.show', compact('aula', 'students', 'teacher')); //
     }
 
     /**
@@ -105,7 +108,8 @@ class AulaController extends Controller
      */
     public function update(StoreAulaRequest $request, Aula $aula)
     {
-        $asignatura = Asignatura::find($request->input('asignatura'));
+        //dd($request->all());
+        $asignatura = Asignatura::find($request->input('asignatura_id'));
         $date = $request->input('inicio');
         $inicio = Carbon::create($date);
         $date1 = $request->input('fin');
@@ -131,6 +135,15 @@ class AulaController extends Controller
      */
     public function destroy(Aula $aula)
     {
-        //
+        $aula->delete();
+        flash()->success('Aula o sección eliminada correctamente!');
+        return redirect()->route('aulas.index');
     }
+
+    public function add_students(Aula $aula)
+    {
+        return view('aulas.add_students', compact('aula'));
+    }
+
+
 }

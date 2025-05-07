@@ -22,7 +22,7 @@ class StoreAulaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'asignatura' => 'required',
+            'asignatura_id' => 'required',
             'name' => 'required',
             'inicio' => 'required|date',
             'fin' => 'required|date',

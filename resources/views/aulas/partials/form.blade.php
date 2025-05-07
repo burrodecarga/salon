@@ -4,7 +4,7 @@
     <div class="mb-4">
         <label class="font-bold mr-2">Nombre de Asignatura</label>
         <div>
-            <select name="asignatura" class="bg-white px-4 py-2 rounded">
+            <select name="asignatura_id" class="bg-white px-4 py-2 rounded">
                 <option value="">Selecciones una asignatura</option>
                 @foreach ($asignaturas as $asignatura)
                     <option value="{{ $asignatura->id }}" @if ($asignatura->id == $aula->asignatura_id) selected @endif>
@@ -29,13 +29,14 @@
     <div class="mb-4">
         <label class="font-bold mr-2">Inicio del período</label>
         <x-input required type="date" name="inicio" class="w-full"
-            placeholder="{{ __('input inicio del período') }}" value="{{ old('inicio', $aula->inicio) }}" />
+            placeholder="{{ __('input inicio del período') }}"
+            value="{{ old('inicio', $aula->inicio->toDateString()) }}" />
         <x-input-error for="inicio" />
     </div>
     <div class="mb-4">
         <label class="font-bold mr-2">Culminación del período</label>
         <x-input required type="date" name="fin" class="w-full" placeholder="{{ __('input fin del período') }}"
-            value="{{ old('fin', $aula->fin) }}" />
+            value="{{ old('fin', $aula->fin->toDateString()) }}" />
         <x-input-error for="fin" />
     </div>
 
