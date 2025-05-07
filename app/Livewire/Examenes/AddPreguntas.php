@@ -22,6 +22,16 @@ class AddPreguntas extends Component
         flash()->success('Pregunta de Exámen agregada correctamente!');
         return redirect()->route('examenes.add_pregunta', $this->examen->id);
     }
+
+    public function del($id)
+    {
+        $this->examen->questions()->detach($id);
+        flash()->success('Pregunta de Exámen agregada correctamente!');
+        return redirect()->route('examenes.add_pregunta', $this->examen->id);
+    }
+
+
+
     public function render()
     {
         $questions = Question::where('asignatura_id', $this->asignatura_id)

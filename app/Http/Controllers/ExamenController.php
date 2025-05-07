@@ -53,7 +53,7 @@ class ExamenController extends Controller
     public function show($examen)
     {
         $examen = Examen::find($examen);
-        $questions = $examen->questions()->inRandomOrder()->paginate(5);
+        $questions = $examen->questions()->inRandomOrder()->paginate(10);
         //dd($examen->questions);
         return view('examenes.show', compact('examen', 'questions'));
     }

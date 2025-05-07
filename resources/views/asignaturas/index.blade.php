@@ -4,16 +4,10 @@
 
 
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
-        <h2
+        <h6
             class="uppercase text-justify font-bold m-auto text-xl text-gray-600 text-wrap justify-center items-center p-1 my-0">
             Asignaturas dictadas por {{ auth()->user()->name }}
-        </h2>
-
-        {{-- @role('teacher')
-            <div class="px-4 py-2 w-full bg-gray-300 rounded">
-                <a href="{{ route('asignaturas.create') }}">Crear Asignatura</a>
-            </div>
-        @endrole --}}
+        </h6>
 
         <div class="container mt-10">
             <div class="card mx-auto w-full md:w-full text-center">
@@ -76,31 +70,23 @@
                                         </div>
                                     </td>
                                     <td width="">Exámenes:
-                                        Total Exámenes: {{ $asignatura->examens->count() }} <br>
-
-                                        <div class="flex flex-col gap-6">
+                                        <div class="flex flex-col gap-1">
                                             @forelse ($asignatura->examens as $examen)
-                                                <div class="bg-blue-300 rounded border py-6">
+                                                <div class=" rounded  py-1 border-blue-700 border-2">
 
                                                     <div>
-                                                        <p>{{ $examen->asignatura }}</p>
-                                                        <p>{{ $examen->name }} Preguntas :
+                                                        <p class="my-0">{{ $examen->asignatura }}</p>
+                                                        <p class="my-0">{{ $examen->name }} Preguntas :
                                                             {{ $examen->questions->count() }}</p>
-                                                        <p>Módulo: {{ $examen->modulo }}</p>
-                                                        <p>Lécción: {{ $examen->lesson }}</p>
+                                                        <p class="my-0">Módulo: {{ $examen->modulo }}</p>
+                                                        <p class="my-0">Lécción: {{ $examen->lesson }}</p>
+                                                        <a href="{{ route('examenes.show', $examen->id) }}"
+                                                            title="Ver preguntas"
+                                                            class="my-1 text-[14px] px-4 py-2 ">Ver
+                                                            Preguntas</a>
                                                     </div>
-                                                    <a href="{{ route('questions.create_pregunta', $examen->id) }}"
-                                                        title="crear pregunta"
-                                                        class="text-white my-0.5 text-[14px] px-4 py-2 bg-green-500">Crear
-                                                        Pregunta</a>
-                                                    <a href="{{ route('examenes.show', $examen->id) }}"
-                                                        title="Ver preguntas"
-                                                        class="text-white my-0.5 text-[14px] px-4 py-2 bg-green-500 hover:bg-blue-500">Ver
-                                                        Preguntas</a>
-                                                    <a href="{{ route('examenes.add_pregunta', $examen->id) }}"
-                                                        title="Agregar preguntas a Exámen"
-                                                        class="text-white my-0.5 text-[14px] px-4 py-2 bg-green-500 hover:bg-blue-500">Agregar
-                                                        Preguntas</a>
+
+
                                                 </div>
                                             @empty
                                                 <p>No tiene Exámenes Registradas</p>

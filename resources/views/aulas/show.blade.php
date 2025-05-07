@@ -14,7 +14,7 @@
                 <div class="card-header bg-primary text-white">
                     <div class="card-title flex justify-between items-center  text-center">
                         <h4 class="m-auto">
-                            {{ __('list of students') }}
+                            {{ __('list of students XX') }}
                         </h4>
                         @role('teacher')
                             <a href="{{ route('aulas.add_students', $aula) }}" class="text-white cursor-pointer"

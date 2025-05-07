@@ -46,8 +46,8 @@
                                             estudiantes
                                         </td>
                                         <td width="" class="flex gap-8 items-center flex-wrap">
-                                            <a href="{{ route('aulas.show', $aula->id) }}" class="text-green-600"
-                                                title="ver detalles de la sección o aula">
+                                            <a href="{{ route('aulas.add_students', $aula->id) }}"
+                                                class="text-green-600" title="ver detalles de la sección o aula">
 
                                                 <flux:icon.squares-plus />
                                             </a>

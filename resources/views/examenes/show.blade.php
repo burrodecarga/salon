@@ -1,13 +1,16 @@
 <x-layouts.app :title="'preguntas de exámen'">
-    <h1>{{ $examen->asignatura }}</h1>
-    <h1>{{ $examen->teacher?->name }}</h1>
-    <h1>{{ $examen->name }}</h1>
-    <h2>preguntas {{ $questions->count() }}</h2>
-    <h1>{{ $examen->level }}</h1>
-    <h1>{{ $examen->type }}</h1>
-    <a href="{{ route('examenes.add_pregunta', $examen->id) }}" title="Agregar preguntas a Exámen"
-        class="text-white my-0.5 text-[14px] px-4 py-2 bg-green-500 hover:bg-blue-500">Agregar
-        Preguntas</a>
+    <h1 class="text-2xl text-center">Preguntas de Exámen</h1>
+    <div class="flex flex-col gap-1">
+        <p class="text-[14px] font-semibold uppercase">{{ $examen->asignatura }}</p>
+        <p class="text-[14px] font-semibold uppercase">{{ $examen->teacher?->name }}</p>
+        <p class="text-[14px] font-semibold uppercase">{{ $examen->name }}</p>
+        <p class="text-[14px]  uppercase"2>preguntas : {{ $questions->count() }}</p>
+        <p class="text-[14px]  uppercase">{{ $examen->level }}</p>
+        <p class="text-[14px]  uppercase">{{ $examen->type }}</p>
+        <a href="{{ route('examenes.add_pregunta', $examen->id) }}" title="Agregar preguntas a Exámen"
+            class="text-white my-0.5 text-[14px] px-4 py-2 bg-green-500 hover:bg-blue-500">Agregar
+            Preguntas</a>
+    </div>
     @foreach ($questions as $key => $question)
         <article class="bg-gray-200 my-6 p-4 rounded">
             <section>

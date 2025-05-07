@@ -53,7 +53,8 @@
 
                                         </a>
                                     @else
-                                        <a class=" text-center mx-auto">
+                                        <a wire:click="del({{ $pregunta->id }})" href="#"
+                                            class=" text-center mx-auto">
                                             <flux:icon.minus-circle class="text-center mx-auto text-red-600" />
                                         </a>
                                     @endif
